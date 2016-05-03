@@ -38,59 +38,36 @@
 
 				partition@50000 {
 					label = "firmware";
-					reg = <0x50000 0x7b0000>;
+					reg = <0x50000 0xfb0000>;
 				};
 			};
 		};
+
+                gpio1: gpio@638 {
+                        status = "okay";
+                };
 	};
 
 	pinctrl {
 		state_default: pinctrl0 {
 			gpio {
-				ralink,group = "i2c", "uartf";
+				ralink,group = "i2c", "uartf", "wled";
 				ralink,function = "gpio";
+			};
+
+			rgmii2 {
+		           ralink,group = "rgmii2";
+		           ralink,function = "gpio";
 			};
 		};
 	};
 
 	ethernet@10100000 {
-		status = "okay";
-
-		pinctrl-names = "default";
-		pinctrl-0 = <&rgmii1_pins &rgmii2_pins &mdio_pins>;
-
-		ralink,port-map = "llllw";
-
-		port@4 {
-			status = "okay";
-			phy-mode = "rgmii";
-			phy-handle = <&phy4>;
-		};
-
-		port@5 {
-			status = "okay";
-			phy-mode = "rgmii";
-			phy-handle = <&phy5>;
-		};
-
-		mdio-bus {
-			status = "okay";
-
-			phy4: ethernet-phy@4 {
-				reg = <4>;
-				phy-mode = "rgmii";
-			};
-
-			phy5: ethernet-phy@5 {
-				reg = <5>;
-				phy-mode = "rgmii";
-			};
-		};
-	};
-
-	gsw@10110000 {
-		ralink,port4 = "gmac";
-	};
+                pinctrl-names = "default";
+                pinctrl-0 = <&ephy_pins>;
+                mtd-mac-address = <&factory 0x4>;
+                ralink,port-map = "llllw";
+        };
 
 	sdhci@10130000 {
 		status = "okay";
@@ -105,14 +82,15 @@
 		#address-cells = <1>;
 		#size-cells = <0>;
 		poll-interval = <20>;
-		s2 {
-			label = "S2";
-			gpios = <&gpio0 1 1>;
+		pair {
+			label = "pair";
+			gpios = <&gpio2 21 1>;
 			linux,code = <0x100>;
 		};
-		s3 {
-			label = "S3";
-			gpios = <&gpio0 2 1>;
+
+		reset_wps {
+			label = "reset_wps";
+			gpios = <&gpio2 20 1>;
 			linux,code = <0x101>;
 		};
 	};
@@ -123,5 +101,31 @@
 
 	ohci@101c1000 {
 		status = "okay";
+	};
+
+    	wmac@10180000 {
+       		ralink,mtd-eeprom = <&factory 0>;
+    	};
+
+	gpio-leds {
+                compatible = "gpio-leds";
+                peripheral {
+                        label = "wled";
+                        gpios = <&gpio2 23 1>;
+                };
+
+		pair {
+			label = "yellow";
+			gpios = <&gpio2 22 1>;
+                };
+
+		pwrled {
+                        label = "pwrled";
+                        gpios = <&gpio3 0 1>;
+                };
+		errled{
+			label = "errled";
+			gpios = <&gpio0 9 1>;
+		};
 	};
 };
