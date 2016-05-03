@@ -1143,11 +1143,9 @@ VOID APMlmeSetTxRate(
 	UCHAR tx_mode = pTxRate->Mode;
 	UCHAR tx_bw = pTxRate->BW;
 
-#ifdef NEW_RATE_ADAPT_SUPPORT
 #ifdef DOT11_VHT_AC
 	if ((pAd->chipCap.phy_caps & fPHY_CAP_VHT) &&
-		((pEntry->pTable == RateTableVht2S) || 
-		 (pEntry->pTable == RateTableVht1S) ||
+		((pEntry->pTable == RateTableVht2S) || (pEntry->pTable == RateTableVht1S) ||
 		 (pEntry->pTable == RateTableVht1S_MCS9) ||
 		 (pEntry->pTable == RateTableVht2S_BW20) ||
 		 (pEntry->pTable == RateTableVht2S_BW40) ||
@@ -1224,7 +1222,6 @@ VOID APMlmeSetTxRate(
 DBGPRINT(RT_DEBUG_INFO, ("%s(): txbw=%d, txmode=%d\n", __FUNCTION__, tx_bw, tx_mode));
 	}
 #endif /* DOT11_VHT_AC */
-#endif /* NEW_RATE_ADAPT_SUPPORT */
 
 #ifdef DOT11_N_SUPPORT
 	if (tx_mode == MODE_HTMIX || tx_mode == MODE_HTGREENFIELD)
@@ -1608,7 +1605,6 @@ VOID MlmeSelectTxRateTable(
 			((pEntry->HTCapability.MCSSet[1] == 0x00) || (pAd->CommonCfg.TxStream == 1)))
 		{/* 11BGN 1S AP*/
 
-#ifdef NEW_RATE_ADAPT_SUPPORT
 #ifdef DOT11_VHT_AC
 			if (CLIENT_STATUS_TEST_FLAG(pEntry, fCLIENT_STATUS_2G_256QAM_CAPABLE)
 				&& (pAd->LatchRfRegs.Channel <= 14))
@@ -1622,7 +1618,6 @@ VOID MlmeSelectTxRateTable(
 				break;
 			}
 #endif /* DOT11_VHT_AC */
-#endif /* NEW_RATE_ADAPT_SUPPORT */
 
 #ifdef AGS_SUPPORT
 			if (SUPPORT_AGS(pAd))
@@ -1665,7 +1660,7 @@ VOID MlmeSelectTxRateTable(
 #endif /* THERMAL_PROTECT_SUPPORT */
 			(((pAd->Antenna.field.TxPath == 3) && (pEntry->HTCapability.MCSSet[2] == 0x00)) || (pAd->CommonCfg.TxStream == 2)))
 		{/* 11BGN 2S AP*/
-#if defined(DOT11_VHT_AC) && defined(NEW_RATE_ADAPT_SUPPORT)
+#ifdef DOT11_VHT_AC
 			if (CLIENT_STATUS_TEST_FLAG(pEntry, fCLIENT_STATUS_2G_256QAM_CAPABLE)
 				&& (pAd->LatchRfRegs.Channel <= 14))
 			{
@@ -2474,15 +2469,14 @@ INT rtmp_get_rate_from_rate_tb(UCHAR *table, INT idx, RTMP_TX_RATE *tx_rate)
 		tx_rate->sgi = rate_entry->ShortGI;
 		tx_rate->stbc = rate_entry->STBC;
 #ifdef DOT11_VHT_AC
-		if (table == RateTableVht1S || table == RateTableVht2S
-				|| table == RateTableVht2S_BW40
-				|| table == RateTableVht2S_BW20
-				|| table == RateTableVht1S_MCS9
-				|| (table == RateTableVht2S_MCS7)
-				|| (table == RateTableVht1S_2G_BW20)
-				|| (table == RateTableVht1S_2G_BW40)
-				|| (table == RateTableVht2S_2G_BW20)
-				|| (table == RateTableVht2S_2G_BW40))
+		if (table == RateTableVht1S || table == RateTableVht2S ||
+					table == RateTableVht2S_BW40 ||
+					table == RateTableVht2S_BW20 || table == RateTableVht1S_MCS9
+					|| (table == RateTableVht2S_MCS7)
+					|| (table == RateTableVht1S_2G_BW20)
+					|| (table == RateTableVht1S_2G_BW40)
+					|| (table == RateTableVht2S_2G_BW20)
+					|| (table == RateTableVht2S_2G_BW40))
 			tx_rate->nss = rate_entry->dataRate;
 		else
 #endif /* DOT11_VHT_AC */

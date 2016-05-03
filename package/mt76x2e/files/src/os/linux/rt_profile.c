@@ -27,13 +27,13 @@
 #include "default_profile.h"
 
 #if defined(CONFIG_RA_HW_NAT) || defined(CONFIG_RA_HW_NAT_MODULE)
-#if defined(SUPPORT_OPENWRT)
-#include <net/nat/hw_nat/ra_nat.h>
-#include <net/nat/hw_nat/frame_engine.h>
+#if defined(CONFIG_SUPPORT_OPENWRT)
+#include "../../../linux-kernel/net/nat/hw_nat/ra_nat.h"
+#include "../../../linux-kernel/net/nat/hw_nat/frame_engine.h"
 #else
 #include "../../../../../../net/nat/hw_nat/ra_nat.h"
 #include "../../../../../../net/nat/hw_nat/frame_engine.h"
-#endif /* SUPPORT_OPENWRT */
+#endif /* CONFIG_SUPPORT_OPENWRT */
 #endif
 
 struct dev_type_name_map{
@@ -43,13 +43,13 @@ struct dev_type_name_map{
 
 
 #if defined(ANDROID_SUPPORT) || defined(RT_CFG80211_SUPPORT)
-#if defined(SUPPORT_OPENWRT)
+#if defined(CONFIG_SUPPORT_OPENWRT)
 #define SECOND_INF_MAIN_DEV_NAME       "rai"
 #define SECOND_INF_MBSSID_DEV_NAME "rai"
 #else
 #define SECOND_INF_MAIN_DEV_NAME		"wlani"
 #define SECOND_INF_MBSSID_DEV_NAME	"wlani"
-#endif /* SUPPORT_OPENWRT */
+#endif /* CONFIG_SUPPORT_OPENWRT */
 #else
 #define SECOND_INF_MAIN_DEV_NAME		"rai"
 #define SECOND_INF_MBSSID_DEV_NAME	"rai"
@@ -66,20 +66,20 @@ struct dev_type_name_map{
 #define def_to_str(s)    #s
 
 #define FIRST_EEPROM_FILE_PATH	"/etc_ro/Wireless/RT2860/"
-#if defined(SUPPORT_OPENWRT)
+#if defined(CONFIG_SUPPORT_OPENWRT)
 #define FIRST_AP_PROFILE_PATH		"/etc/wireless/mt7602e/mt7602e.dat"
 #else
 #define FIRST_AP_PROFILE_PATH      "/etc/Wireless/RT2860/RT2860.dat"
-#endif /* SUPPORT_OPENWRT */
+#endif /* CONFIG_SUPPORT_OPENWRT */
 #define FIRST_STA_PROFILE_PATH		"/etc/Wireless/RT2860/RT2860.dat"
 #define FIRST_CHIP_ID	xdef_to_str(CONFIG_RT_FIRST_CARD)
 
 #define SECOND_EEPROM_FILE_PATH	"/etc_ro/Wireless/iNIC/"
-#if defined(SUPPORT_OPENWRT)
+#if defined(CONFIG_SUPPORT_OPENWRT)
 #define SECOND_AP_PROFILE_PATH	"/etc/wireless/mt7612e/mt7612e.dat"
 #else
 #define SECOND_AP_PROFILE_PATH "/etc/Wireless/iNIC/iNIC_ap.dat"
-#endif /* SUPPORT_OPENWRT */
+#endif /* CONFIG_SUPPORT_OPENWRT */
 #define SECOND_CHIP_ID	xdef_to_str(CONFIG_RT_SECOND_CARD)
 
 static struct dev_type_name_map prefix_map[] =

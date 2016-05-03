@@ -336,7 +336,7 @@ INT RT_CfgSetWirelessMode(RTMP_ADAPTER *pAd, PSTRING arg)
 		return FALSE;
 	}
 
-#if defined(MT76x2) && defined(DOT11_VHT_AC)
+#ifdef MT76x2
 	if (pChipCap->ac_off_mode && WMODE_CAP_AC(wmode)) {
 		DBGPRINT(RT_DEBUG_ERROR, ("it doesn't support VHT AC!\n"));
 		wmode &= ~(WMODE_AC);
@@ -427,7 +427,7 @@ INT RT_CfgSetMbssWirelessMode(RTMP_ADAPTER *pAd, PSTRING arg)
 	}
 
 
-#if defined(MT76x2) && defined(DOT11_VHT_AC)
+#ifdef MT76x2
 	if (pChipCap->ac_off_mode && WMODE_CAP_AC(wmode)) {
 		DBGPRINT(RT_DEBUG_ERROR, ("it doesn't support VHT AC!\n"));
 		wmode &= ~(WMODE_AC);

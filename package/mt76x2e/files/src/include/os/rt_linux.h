@@ -122,32 +122,32 @@ typedef struct usb_ctrlrequest devctrlrequest;
 #ifdef CONFIG_AP_SUPPORT
 #ifdef RTMP_MAC_PCI
 #if CONFIG_RT_SECOND_IF_RF_OFFSET == 0x48000
-#if defined(SUPPORT_OPENWRT)
+#if defined(CONFIG_SUPPORT_OPENWRT)
 #define AP_PROFILE_PATH			"/etc/wireless/mt7612e/mt7612e.dat"
 #else
 #define AP_PROFILE_PATH			"/etc/Wireless/iNIC/iNIC_ap.dat"
-#endif /* SUPPORT_OPENWRT */
+#endif /* CONFIG_SUPPORT_OPENWRT */
 #define AP_RTMP_FIRMWARE_FILE_NAME "/etc_ro/Wireless/iNIC/RT2860AP.bin"
 #ifdef SINGLE_SKU_V2
-#if defined(SUPPORT_OPENWRT)
+#if defined(CONFIG_SUPPORT_OPENWRT)
 #define SINGLE_SKU_TABLE_FILE_NAME	"/etc/Wireless/mt7612/SingleSKU.dat"
 #else
 #define SINGLE_SKU_TABLE_FILE_NAME	"/etc_ro/Wireless/iNIC/SingleSKU.dat"
-#endif  /* SUPPORT_OPENWRT */
+#endif  /* CONFIG_SUPPORT_OPENWRT */
 #endif /* SINGLE_SKU_V2 */
 #else
-#if defined(SUPPORT_OPENWRT)
+#if defined(CONFIG_SUPPORT_OPENWRT)
 #define AP_PROFILE_PATH	        "/etc/wireless/mt7612e/mt7612e.dat"
 #else
 #define AP_PROFILE_PATH         "/etc/Wireless/RT2860AP/RT2860AP.dat"
-#endif /* SUPPORT_OPENWRT */
+#endif /* CONFIG_SUPPORT_OPENWRT */
 #define AP_RTMP_FIRMWARE_FILE_NAME "/etc/Wireless/RT2860AP/RT2860AP.bin"
 #ifdef SINGLE_SKU_V2
-#if defined(SUPPORT_OPENWRT)
+#if defined(CONFIG_SUPPORT_OPENWRT)
 #define SINGLE_SKU_TABLE_FILE_NAME	"/etc/Wireless/mt7602/SingleSKU.dat"
 #else
 #define SINGLE_SKU_TABLE_FILE_NAME	"/etc/Wireless/RT2860AP/SingleSKU.dat"
-#endif  /* SUPPORT_OPENWRT */
+#endif  /* CONFIG_SUPPORT_OPENWRT */
 #endif /* SINGLE_SKU_V2 */
 #endif
 

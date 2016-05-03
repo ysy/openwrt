@@ -617,10 +617,8 @@ INT ATESetUpNDPAFrame(
 	NDIS_PHYSICAL_ADDRESS AllocPa;
 	HTTRANSMIT_SETTING	TxHTPhyMode;
 	UCHAR *buf;
-#ifdef DOT11_VHT_AC
 	VHT_NDPA_FRAME *vht_ndpa;
 	SNDING_STA_INFO *sta_info;
-#endif
 
 	RTMP_TX_RING *pTxRing = &pAd->TxRing[QID_AC_BE];
 	TXWI_STRUC *pTxWI = (TXWI_STRUC *)pTxRing->Cell[TxIdx].DmaBuf.AllocVa;
@@ -786,7 +784,6 @@ INT ATESetUpNDPAFrame(
 	}
 	else
 #endif /* RALINK_QA */
-#ifdef DOT11_VHT_AC
 	{
 		buf = (pDMAHeaderBufVA + TXWISize);
 		vht_ndpa = (VHT_NDPA_FRAME *)buf;
@@ -804,7 +801,6 @@ INT ATESetUpNDPAFrame(
 		vht_ndpa->token.token_num = 0;
 		vht_ndpa->duration = 100;
 	}
-#endif
 
 
 #ifdef RT_BIG_ENDIAN

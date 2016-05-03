@@ -38,13 +38,13 @@
 #include <linux/rtnetlink.h>
 
 #if defined(CONFIG_RA_HW_NAT) || defined(CONFIG_RA_HW_NAT_MODULE)
-#if defined(SUPPORT_OPENWRT)
-#include <net/nat/hw_nat/ra_nat.h>
-#include <net/nat/hw_nat/frame_engine.h>
+#if defined(CONFIG_SUPPORT_OPENWRT)
+#include "../../../linux-kernel/net/nat/hw_nat/ra_nat.h"
+#include "../../../linux-kernel/net/nat/hw_nat/frame_engine.h"
 #else
 #include "../../../../../../net/nat/hw_nat/ra_nat.h"
 #include "../../../../../../net/nat/hw_nat/frame_engine.h"
-#endif /* SUPPORT_OPENWRT */
+#endif /* CONFIG_SUPPORT_OPENWRT */
 #endif
 
 /* TODO */
@@ -90,7 +90,7 @@ static inline void netdev_priv_set(struct net_device *dev, void *priv)
 }
 
 
-ULONG RTDebugLevel = CONFIG_DEBUG_LEVEL;
+ULONG RTDebugLevel = RT_DEBUG_ERROR;
 ULONG RTDebugFunc = 0;
 
 #ifdef OS_ABL_FUNC_SUPPORT
@@ -328,7 +328,7 @@ void RtmpFlashRead(
 #ifdef RA_MTD_RW_BY_NUM
 	ra_mtd_read(MTD_NUM_FACTORY, 0, (size_t) b, p);
 #else
-	ra_mtd_read_nm("factory", a&0xFFFF, (size_t) b, p);
+	ra_mtd_read_nm("Factory", a&0xFFFF, (size_t) b, p);
 #endif
 #endif /* CONFIG_RALINK_FLASH_API */
 }
@@ -344,7 +344,7 @@ void RtmpFlashWrite(
 #ifdef RA_MTD_RW_BY_NUM
 	ra_mtd_write(MTD_NUM_FACTORY, 0, (size_t) b, p);
 #else
-	ra_mtd_write_nm("factory", a&0xFFFF, (size_t) b, p);
+	ra_mtd_write_nm("Factory", a&0xFFFF, (size_t) b, p);
 #endif
 #endif /* CONFIG_RALINK_FLASH_API */
 }

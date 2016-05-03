@@ -45,14 +45,13 @@
 
 #define RTMP_MODULE_OS
 
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3,10,0))
+#include <linux/random.h>
+#endif
 #include "rtmp_comm.h"
 #include "rt_os_util.h"
 #include "rt_os_net.h"
 #include "rt_config.h"
-
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3,10,0))
-#include <linux/random.h>
-#endif
 
 
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,28))

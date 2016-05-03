@@ -1838,7 +1838,6 @@ void mt76x2_get_external_lna_gain(RTMP_ADAPTER *ad)
 
 void mt76x2_get_agc_gain(RTMP_ADAPTER *ad, BOOLEAN init_phase)
 {
-#ifdef DYNAMIC_VGA_SUPPORT
 	UCHAR val;
 	USHORT val16;
 	UINT32 bbp_val;
@@ -1871,7 +1870,6 @@ void mt76x2_get_agc_gain(RTMP_ADAPTER *ad, BOOLEAN init_phase)
 	}
 
 	ad->CommonCfg.lna_vga_ctl.bDyncVgaEnable = TRUE;
-#endif /* DYNAMIC_VGA_SUPPORT */
 }
 
 int mt76x2_reinit_agc_gain(RTMP_ADAPTER *ad, u8 channel)
@@ -3520,8 +3518,8 @@ void mt76x2_get_current_temp(RTMP_ADAPTER *ad)
 	else
 	        pChipCap->current_temp = 25;
 
-	//DBGPRINT(RT_DEBUG_TRACE, ("%s::read_temp=%d (0x%x), current_temp=%d (0x%x)\n", 
-	//	__FUNCTION__, temp_val, temp_val, pChipCap->current_temp, pChipCap->current_temp));
+	DBGPRINT(RT_DEBUG_TRACE, ("%s::read_temp=%d (0x%x), current_temp=%d (0x%x)\n", 
+		__FUNCTION__, temp_val, temp_val, pChipCap->current_temp, pChipCap->current_temp));
 }
 
 void mt76x2_read_temp_info_from_eeprom(RTMP_ADAPTER *ad)

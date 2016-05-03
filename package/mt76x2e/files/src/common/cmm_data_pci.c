@@ -1827,6 +1827,7 @@ done:
 	return pRxPacket;
 }
 
+
 NDIS_STATUS MlmeHardTransmitTxRing(RTMP_ADAPTER *pAd, UCHAR QueIdx, PNDIS_PACKET pPacket)
 {
 	PACKET_INFO PacketInfo;
@@ -1853,7 +1854,7 @@ NDIS_STATUS MlmeHardTransmitTxRing(RTMP_ADAPTER *pAd, UCHAR QueIdx, PNDIS_PACKET
 	UCHAR TxPwrAdj = 0;
 #endif /* SPECIFIC_TX_POWER_SUPPORT */
 #endif /* CONFIG_AP_SUPPORT */
-	UINT32 apidx  = 0;
+
 	RTMP_QueryPacketInfo(pPacket, &PacketInfo, &pSrcBufVA, &SrcBufLen);
 	if (pSrcBufVA == NULL)
 		return NDIS_STATUS_FAILURE;
@@ -1932,7 +1933,7 @@ NDIS_STATUS MlmeHardTransmitTxRing(RTMP_ADAPTER *pAd, UCHAR QueIdx, PNDIS_PACKET
 #ifdef CONFIG_AP_SUPPORT
 #ifdef SPECIFIC_TX_POWER_SUPPORT
 				/* Find which MBSSID to be send this probeRsp */
-				apidx = get_apidx_by_addr(pAd, pHeader_802_11->Addr2);
+				UINT32 apidx = get_apidx_by_addr(pAd, pHeader_802_11->Addr2);
 
 				if (!(apidx >= pAd->ApCfg.BssidNum) &&
 				     (pAd->ApCfg.MBSSID[apidx].TxPwrAdj != -1) /* &&
@@ -2135,7 +2136,7 @@ BOOLEAN RxRing1DoneInterruptHandle(RTMP_ADAPTER *pAd)
 		if (pFceInfo->info_type == CMD_PACKET)
 		{
 			DBGPRINT(RT_DEBUG_INFO, ("%s: Receive command packet.\n", __FUNCTION__));
-			pci_rx_cmd_msg_complete(pAd, pFceInfo, (PUCHAR)pRxInfo);
+			pci_rx_cmd_msg_complete(pAd, pFceInfo, pRxInfo);
 			RELEASE_NDIS_PACKET(pAd, pRxPacket, NDIS_STATUS_SUCCESS);
 			continue;
 		} else {
@@ -2158,8 +2159,8 @@ VOID RTMPHandleTxRing8DmaDoneInterrupt(RTMP_ADAPTER *pAd)
 /*	int 		 i;*/
 	UCHAR	FREE = 0;
 	RTMP_CTRL_RING *pCtrlRing = &pAd->CtrlRing;
-	//UINT8 TXWISize = pAd->chipCap.TXWISize;
-//	unsigned long flags;
+	UINT8 TXWISize = pAd->chipCap.TXWISize;
+	unsigned long flags;
 
 	NdisAcquireSpinLock(&pAd->CtrlRingLock);	
 

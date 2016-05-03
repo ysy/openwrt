@@ -38,7 +38,7 @@ struct chip_map RTMP_CHIP_E2P_FILE_TABLE[] = {
 	{0x3593,	"HMC_RT3593_PCIe_3T3R_V1_3.bin"},
 	{0x5392,	"RT5392_PCIe_2T2R_ALC_V1_4.bin"},
 	{0x5592,	"RT5592_PCIe_2T2R_V1_7.bin"},
-#if defined(SUPPORT_OPENWRT)
+#if defined(CONFIG_SUPPORT_OPENWRT)
 	{0x7602,    "mt7602e/mt7602e.eeprom.bin"},
 	{0x7612,    "mt7612e/mt7612e.eeprom.bin"},
 #else

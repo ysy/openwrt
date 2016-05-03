@@ -76,11 +76,11 @@
 #endif /* CONFIG_RT2860V2_2850 */
 
 #if defined (CONFIG_RALINK_RT6352)  || defined (CONFIG_RALINK_MT7620)
-#if defined(SUPPORT_OPENWRT)
+#if defined(CONFIG_SUPPORT_OPENWRT)
 #define EEPROM_DEFAULT_FILE_PATH                     "/etc/wireless/mt7612e/mt7612e.eeprom.bin"
 #else
 #define EEPROM_DEFAULT_FILE_PATH                     "/etc_ro/wlan/MT7620_AP_2T2R-4L_V15.BIN"
-#endif /* SUPPORT_OPENWRT */
+#endif /* CONFIG_SUPPORT_OPENWRT */
 #endif /* defined (CONFIG_RALINK_RT6352)  || defined (CONFIG_RALINK_MT7620) */
 
 
@@ -135,7 +135,7 @@ static USHORT EE_FLASH_ID_LIST[]={
 #define BIN_FILE_PATH				"/tmp/RT30xxEEPROM.bin"
 #endif /* BB_SOC */
 
-#if defined(SUPPORT_OPENWRT)
+#if defined(CONFIG_SUPPORT_OPENWRT)
 #define EEPROM_FILE_DIR			"/etc/wireless/"
 #define EEPROM_1ST_FILE_DIR		"/etc/wireless/"
 #define EEPROM_2ND_FILE_DIR		"/etc/wireless/"
@@ -143,7 +143,7 @@ static USHORT EE_FLASH_ID_LIST[]={
 #define EEPROM_FILE_DIR            "/etc_ro/wlan/"
 #define EEPROM_1ST_FILE_DIR        "/etc_ro/Wireless/iNIC/"
 #define EEPROM_2ND_FILE_DIR        "/etc_ro/Wireless/iNIC/"
-#endif /* SUPPORT_OPENWRT */
+#endif /* CONFIG_SUPPORT_OPENWRT */
 
 #ifdef RT_BIG_ENDIAN
 typedef	union _EEPROM_WORD_STRUC {
