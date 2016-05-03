@@ -3645,9 +3645,9 @@ INT RTMPAPQueryInformation(
     STRING	driverVersion[16];
 	struct wifi_dev *wdev;
 
-#if defined(DBG) || defined(WSC_AP_SUPPORT) ||defined(BB_SOC)
+//#if defined(DBG) || defined(WSC_AP_SUPPORT) ||defined(BB_SOC)
 	UCHAR	apidx = pObj->ioctl_if;
-#endif
+//#endif
 #ifdef WSC_AP_SUPPORT
 	UINT WscPinCode = 0;
 	PWSC_PROFILE pProfile;

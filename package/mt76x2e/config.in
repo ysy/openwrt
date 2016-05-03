@@ -21,6 +21,21 @@ config SUPPORT_OPENWRT
 	depends on RLT_AP_SUPPORT
 	default y
 
+config NEW_RATE_ADAPT_SUPPORT
+	bool "NEW_RATE_ADAPT_SUPPORT"
+	depends on RLT_AP_SUPPORT
+	default y
+
+config  RTMP_FLASH_SUPPORT
+	bool "RTMP_FLASH_SUPPORT"
+	depends on RLT_AP_SUPPORT
+	default y
+
+config  RT2860V2_AP_MEMORY_OPTIMIZATION
+	bool "RT2860V2_AP_MEMORY_OPTIMIZATION"
+	depends on RLT_AP_SUPPORT
+	default y
+	
 config WDS_SUPPORT
 	bool "WDS"
 	depends on RLT_AP_SUPPORT

@@ -4023,7 +4023,9 @@ BOOLEAN rtmp_rx_done_handle(RTMP_ADAPTER *pAd)
 				DBGPRINT(RT_DEBUG_TRACE, ("Dump the RxD, RxFCEInfo and RxInfo:\n"));
 				hex_dump("RxD", (UCHAR *)pRxD, sizeof(RXD_STRUC));
 #ifdef RTMP_MAC_PCI
+			#ifdef DBG
 				dump_rxd(pAd, pRxD);
+			#endif
 #endif /* RTMP_MAC_PCI */
 				dumpRxFCEInfo(pAd, pFceInfo);
 				dump_rxinfo(pAd, pRxInfo);

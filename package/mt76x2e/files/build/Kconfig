@@ -22,6 +22,12 @@ config CFG80211_SUPPORT
 	depends on RLT_AP_SUPPORT
 	default n
 
+config NEW_RATE_ADAPT_SUPPORT
+	bool "NEW_RATE_ADAPT_SUPPORT"
+	depends on RLT_AP_SUPPORT
+	default n
+
+	
 config NEW_MBSSID_MODE
 	bool "New MBSSID Mode"
 	depends on RLT_AP_SUPPORT || RALINK_RT3883 || RALINK_RT3352 || RALINK_RT5350 || RALINK_RT6352 || RALINK_MT7620

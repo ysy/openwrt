@@ -328,7 +328,7 @@ void RtmpFlashRead(
 #ifdef RA_MTD_RW_BY_NUM
 	ra_mtd_read(MTD_NUM_FACTORY, 0, (size_t) b, p);
 #else
-	ra_mtd_read_nm("Factory", a&0xFFFF, (size_t) b, p);
+	ra_mtd_read_nm("factory", a&0xFFFF, (size_t) b, p);
 #endif
 #endif /* CONFIG_RALINK_FLASH_API */
 }
@@ -344,7 +344,7 @@ void RtmpFlashWrite(
 #ifdef RA_MTD_RW_BY_NUM
 	ra_mtd_write(MTD_NUM_FACTORY, 0, (size_t) b, p);
 #else
-	ra_mtd_write_nm("Factory", a&0xFFFF, (size_t) b, p);
+	ra_mtd_write_nm("factory", a&0xFFFF, (size_t) b, p);
 #endif
 #endif /* CONFIG_RALINK_FLASH_API */
 }

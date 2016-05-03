@@ -1,5 +1,6 @@
 ifeq ($(CONFIG_SUPPORT_OPENWRT),y)
 EXTRA_CFLAGS = -I$(src)/../src/include -I$(src)/../src/ate/include
+EXTRA_CFLAGS += -DCONFIG_SUPPORT_OPENWRT
 DRV_NAME = mt76x2e
 RT_WIFI_DIR = ../src
 else
@@ -418,7 +419,9 @@ endif
 os_objs := $(RT_WIFI_DIR)/os/linux/rt_proc.o\
             $(RT_WIFI_DIR)/os/linux/rt_linux.o\
             $(RT_WIFI_DIR)/os/linux/rt_profile.o\
-            $(RT_WIFI_DIR)/os/linux/rt_main_dev.o
+            $(RT_WIFI_DIR)/os/linux/rt_main_dev.o \
+             $(RT_WIFI_DIR)/os/linux/rt_flash.o
+
 
 ifeq ($(CONFIG_MULTI_INF_SUPPORT),y)
     EXTRA_CFLAGS += -DMULTI_INF_SUPPORT
@@ -751,35 +754,12 @@ endif
 
 # For OpenWrt compatibility
 ifeq ($(CONFIG_SUPPORT_OPENWRT),y)
-EXTRA_CFLAGS += -DCONFIG_RT_FIRST_CARD=$(CONFIG_RT_FIRST_CARD)
-EXTRA_CFLAGS += -DCONFIG_RT_SECOND_CARD=$(CONFIG_RT_SECOND_CARD)
-
-EXTRA_CFLAGS += -DCONFIG_RT_FIRST_IF_RF_OFFSET=$(CONFIG_RT_FIRST_IF_RF_OFFSET)
-EXTRA_CFLAGS += -DCONFIG_RT_SECOND_IF_RF_OFFSET=$(CONFIG_RT_SECOND_IF_RF_OFFSET)
-
-ifeq ($(CONFIG_FIRST_IF_EEPROM_PROM),y)
-EXTRA_CFLAGS += -DCONFIG_RT_FIRST_CARD_EEPROM="\"prom\""
-else
-ifeq ($(CONFIG_FIRST_IF_EEPROM_EFUSE),y)
-EXTRA_CFLAGS += -DCONFIG_RT_FIRST_CARD_EEPROM="\"efuse\""
-else
-ifeq ($(CONFIG_FIRST_IF_EEPROM_FLASH),y)
+EXTRA_CFLAGS += -DCONFIG_RT_FIRST_CARD=y
+EXTRA_CFLAGS += -DCONFIG_RT_SECOND_CARD=y
+EXTRA_CFLAGS += -DCONFIG_RT_FIRST_IF_RF_OFFSET=0x48000
+EXTRA_CFLAGS += -DCONFIG_RT_SECOND_IF_RF_OFFSET=0x48000
 EXTRA_CFLAGS += -DCONFIG_RT_FIRST_CARD_EEPROM="\"flash\""
-endif
-endif
-endif
-
-ifeq ($(CONFIG_SECOND_IF_EEPROM_PROM),y)
-EXTRA_CFLAGS += -DCONFIG_RT_SECOND_CARD_EEPROM="\"prom\""
-else
-ifeq ($(CONFIG_SECOND_IF_EEPROM_EFUSE),y)
-EXTRA_CFLAGS += -DCONFIG_RT_SECOND_CARD_EEPROM="\"efuse\""
-else
-ifeq ($(CONFIG_SECOND_IF_EEPROM_FLASH),y)
 EXTRA_CFLAGS += -DCONFIG_RT_SECOND_CARD_EEPROM="\"flash\""
-endif
-endif
-endif
 
 endif
 

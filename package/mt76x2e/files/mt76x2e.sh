@@ -139,7 +139,7 @@ done
 	;;
     esac
 
-	cat > /tmp/RT2860.dat<<EOF
+	cat > /tmp/MT7612E.dat<<EOF
 #The word of "Default" must not be removed
 Default
 CountryRegion=0
@@ -154,7 +154,7 @@ SSID5=
 SSID6=
 SSID7=
 SSID8=
-WirelessMode=${hwmode:-9}
+WirelessMode=15
 FixedTxMode=
 TxRate=0
 Channel=${channel:-11}
@@ -336,6 +336,12 @@ HT_RxStream=2
 HT_PROTECT=1
 HT_DisallowTKIP=1
 HT_BSSCoexistence=${HT_CE:-1}
+VHT_BW=1
+VHT_SGI=1
+VHT_STBC=0
+VHT_BW_SIGNAL=0
+VHT_DisallowNonVHT=0
+VHT_LDPC=1
 GreenAP=${greenap:-0}
 WscConfMode=0
 WscConfStatus=1
@@ -411,26 +417,26 @@ EOF
 
 }
 
-reload_rt2860v2() {
-	ifconfig ra0 down
-	rmmod rt2860v2_ap 
+reload_mt76x2e() {
+	ifconfig rai0 down
+	rmmod mt76x2e 
 
-	insmod rt2860v2_ap
-	ifconfig ra0 up
+	insmod mt76x2e
+	ifconfig rai0 up
 }
 
-scan_rt2860v2() {
+scan_mt76x2e() {
 	local device="$1"
 }
 
-disable_rt2860v2() {
+disable_mt76x2e() {
 	local device="$1"
 	set_wifi_down $device
 	ifconfig $device down
 	true
 }
 
-rt2860v2_start_vif() {
+mt76x2e_start_vif() {
 	local vif="$1"
 	local ifname="$2"
 
@@ -441,13 +447,13 @@ rt2860v2_start_vif() {
 	set_wifi_up "$vif" "$ifname"
 }
 
-enable_rt2860v2() {
+enable_mt76x2e() {
 #传参过来的第一个参数是Radio0
 	local device="$1" dmode if_num=0;
 	
 	config_get_bool disabled "$device" disabled 0	
 	if [ "$disabled" = "1" ] ;then
-	ifconfig ra0 down
+	ifconfig rai0 down
 	return
 	fi
 	
@@ -465,8 +471,8 @@ enable_rt2860v2() {
 		config_get ifname $vif device	
 		
 		#根据ifname数量配置多SSID
-		[ "$ifname" == "ra0" ] && {
-		ifname="ra$if_num"
+		[ "$ifname" == "rai0" ] && {
+		ifname="rai$if_num"
 		}
 		let if_num+=1
 		#排除如果设置为apcli0
@@ -604,6 +610,7 @@ enable_rt2860v2() {
 					iwpriv $ifname set WscConfMode=0
 					;;
 				none|open)
+					echo HELLO7
 					echo "NONE" >>/tmp/wifi_encryption_${ifname}.dat
 					iwpriv $ifname set AuthMode=OPEN
 					iwpriv $ifname set WscConfMode=0
@@ -611,7 +618,7 @@ enable_rt2860v2() {
 					;;
 			esac
 		}
-		
+		echo HELLO6		
 		#如果关闭了WIFI，则关闭RF
 		if [ $disabled == 1 ]; then
 		 iwpriv $ifname set RadioOn=0
@@ -626,7 +633,7 @@ enable_rt2860v2() {
 #		else
 #		 iwpriv $ifname set HideSSID=0
 #		fi
-
+		echo HELLO5
 		#隔离客户端连接。
 		[ $isolate == "1" ]&&{
 			iwpriv $ifname set NoForwarding=1
@@ -636,23 +643,24 @@ enable_rt2860v2() {
 		[ $doth == "1" ]&&{
 			iwpriv $ifname set IEEE80211H=1
 		}	
-		
+		echo HELLO4		
 		ifconfig "$ifname" up
 		if [ "$mode" == "sta" ];then {
 			net_cfg="$(find_net_config "$vif")"
 			[ -z "$net_cfg" ] || {
-					rt2860v2_start_vif "$vif" "$ifname"
+					mt76x2e_start_vif "$vif" "$ifname"
 
 			}
 		}
 		else
 		{
+			echo HELLO 3
 			local net_cfg bridge
 			net_cfg="$(find_net_config "$vif")"
 			[ -z "$net_cfg" ]||{
 				bridge="$(bridge_interface "$net_cfg")"
 				config_set "$vif" bridge "$bridge"
-				rt2860v2_start_vif "$vif" "$ifname"
+				mt76x2e_start_vif "$vif" "$ifname"
 				#Fix bridge problem
 				[ -z `brctl show |grep $ifname` ] && {
 				brctl addif $(bridge_interface "$net_cfg") $ifname
@@ -664,6 +672,7 @@ enable_rt2860v2() {
 
 		}
 		fi;
+		echo "HELLO 2"
 		set_wifi_up "$vif" "$ifname"
 
 		# If isolation is requested, disable forwarding between
@@ -675,16 +684,16 @@ enable_rt2860v2() {
 #		iwpriv $ifname set NoForwardingBTNBSSID="${isolate:-0}"
 
 	done
-	
+	echo "HELLO "	
 	#配置无线最大连接数
 	iwpriv $device set MaxStaNum=$maxassoc
 }
 
 first_enable() {
 
-ifconfig ra0 down
+ifconfig rai0 down
 
-	cat > /tmp/RT2860.dat<<EOF
+	cat > /tmp/MT7612E.dat<<EOF
 #The word of "Default" must not be removed
 Default
 CountryRegion=0
@@ -692,7 +701,7 @@ CountryRegionABand=7
 CountryCode=US
 BssidNum=1
 SSID1=PandoraBox
-WirelessMode=9
+WirelessMode=15
 FixedTxMode=
 TxRate=0
 Channel=11
@@ -874,6 +883,12 @@ HT_RxStream=2
 HT_PROTECT=1
 HT_DisallowTKIP=1
 HT_BSSCoexistence=1
+VHT_BW=1
+VHT_SGI=1
+VHT_STBC=0
+VHT_BW_SIGNAL=0
+VHT_DisallowNonVHT=0
+VHT_LDPC=1
 GreenAP=0
 WscConfMode=0
 WscConfStatus=1
@@ -947,31 +962,32 @@ Key3Str=
 Key4Str=
 EOF
 
-ifconfig ra0 up
+ifconfig rai0 up
 }
 
-#detect_rt2860v2函数用于检测是否存在驱动
-detect_rt2860v2() {
+#detect_mt76x2e函数用于检测是否存在驱动
+detect_mt76x2e() {
 	local i=-1
-#判断系统是否存在rt2860v2_ap，不存在则退出
+#判断系统是否存在mt76x2e，不存在则退出
 	cd /sys/module/
-	[ -d rt2860v2_ap ] || return
+	[ -d mt76x2e ] || return
+	
 #检测系统存在多少个wifi接口
-	while grep -qs "^ *ra$((++i)):" /proc/net/dev; do
-		config_get type ra${i} type
-		[ "$type" = rt2860v2 ] && continue
+	while grep -qs "^ *rai$((++i)):" /proc/net/dev; do
+		config_get type rai${i} type
+		[ "$type" = mt76x2e ] && continue
 		
 #检查并创建WiFi驱动配置链接
-	[ -f /etc/Wireless/RT2860/RT2860.dat ] || {
-	mkdir -p /etc/Wireless/RT2860/
-	ln -s /tmp/RT2860.dat /etc/Wireless/RT2860/RT2860.dat
+	[ -f /etc/wireless/mt7612e/mt7612e.dat ] || {
+	mkdir -p /etc/wireless/mt7612e
+	ln -s /tmp/MT7612E.dat /etc/wireless/mt7612e/mt7612e.dat
 	}
-	
+
 	first_enable
 	
 		cat <<EOF
-config wifi-device  ra${i}
-	option type     rt2860v2
+config wifi-device  rai${i}
+	option type     mt76x2e
 	option mode 	9
 	option channel  auto
 	option txpower 100
@@ -981,14 +997,14 @@ config wifi-device  ra${i}
 	option disabled 0	
 	
 config wifi-iface
-	option device   ra${i}
+	option device   rai${i}
 	option network	lan
 	option mode     ap
-	option ssid     PandoraBox${i#0}_$(cat /sys/class/net/ra${i}/address|awk -F ":" '{print $4""$5""$6 }'| tr a-z A-Z)
+	option ssid     PandoraBox${i#0}_$(cat /sys/class/net/rai${i}/address|awk -F ":" '{print $4""$5""$6 }'| tr a-z A-Z)
 	option encryption none
 EOF
 
-	ifconfig ra0 down 
+	ifconfig rai0 down 
 	done
 	
 }
