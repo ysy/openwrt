@@ -292,7 +292,15 @@ static int CFG80211_OpsChannelSet(
 	return 0;
 } /* End of CFG80211_OpsChannelSet */
 
-
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0))
+static int CFG80211_OpsMonitorChannelSet(
+	IN struct wiphy					*pWiphy,
+	 struct cfg80211_chan_def *chandef)
+{
+	CFG80211_OpsChannelSet(pWiphy, NULL, chandef->chan, 
+				cfg80211_get_chandef_type(chandef));
+}
+#endif
 /*
 ========================================================================
 Routine Description:
@@ -1440,7 +1448,11 @@ static int CFG80211_OpsPmksaFlush(
 
 struct cfg80211_ops CFG80211_Ops = {
 	/* set channel for a given wireless interface */
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0))
+	.set_monitor_channel		= CFG80211_OpsMonitorChannelSet,
+#else
 	.set_channel				= CFG80211_OpsChannelSet,
+#endif
 	/* change type/configuration of virtual interface */
 	.change_virtual_intf		= CFG80211_OpsVirtualInfChg,
 

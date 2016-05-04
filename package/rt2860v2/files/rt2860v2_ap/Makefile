@@ -4,6 +4,12 @@ ifeq ($(CONFIG_SOC_MT7620),y)
 EXTRA_CFLAGS += -DCONFIG_RALINK_MT7620
 endif
 
+ifeq ($(CONFIG_RT_CFG80211_SUPPORT), y)
+EXTRA_CFLAGS += -DRT_CFG80211_SUPPORT -DCONFIG_RT_CFG80211_SUPPORT
+
+rt2860v2_ap-objs += ../rt2860v2/os/linux/cfg80211.o \
+					../rt2860v2/os/linux/cfg80211drv.o
+endif
 
 obj-$(CONFIG_RT2860V2_AP) += rt2860v2_ap.o  
 #obj-$(CONFIG_RT2860V2_AP) += rt2860v2_ap_3.10_dep.o
