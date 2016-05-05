@@ -7,7 +7,7 @@
 	model = "WE1826";
 
 	chosen {
-		bootargs = "console=ttyS0,115200";
+		bootargs = "console=ttyS0,57600";
 	};
 
 	palmbus@10000000 {
