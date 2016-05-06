@@ -1,0 +1,30 @@
+--- a/iwinfo_ra.c
++++ b/iwinfo_ra.c
+@@ -589,7 +589,7 @@ int ra_get_assoclist(const char *ifname,
+     struct iwreq wrq;
+     struct iwinfo_assoclist_entry entry;
+ 	
+-	if(!strcmp(ifname,"apcli0") || !strcmp(ifname,"apclii0"))
++    if(!strcmp(ifname,"apcli0") || !strcmp(ifname,"apclii0"))
+ 	return -1;
+ 	
+ 	//if(is_rausb(ifname))
+@@ -603,8 +603,9 @@ int ra_get_assoclist(const char *ifname,
+     ret = ra_ioctl(ifname, RTPRIV_IOCTL_GET_MAC_TABLE_STRUCT, &wrq);
+     if (ret < 0)
+     {
+-        printf("assoclist ioctl fails\n");
+-        return -1;
++        //printf("assoclist ioctl fails\n");
++        *len = 0;
++	return 0;
+     }
+ 	
+ 	RT_802_11_MAC_TABLE *a = &table;
+@@ -1006,4 +1007,4 @@ const struct iwinfo_ops ra_ops = {
+         .countrylist      = ra_get_countrylist,
+         .phyname  = ra_get_phyname,
+         .close            = ra_close
+-};
+\ No newline at end of file
++};
