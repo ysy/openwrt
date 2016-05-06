@@ -18,22 +18,51 @@ detect_mt7620() {
 	[ -d $module ] || return
 	[ -e /etc/config/wireless ] && return
          cat <<EOF
-config wifi-device      mt7620
-        option type     mt7620
-        option vendor   ralink
-        option band     2.4G
-        option channel  0
-    	option auotch   2
+config wifi-device mt7620
+	option type 'mt7620'
+	option vendor 'ralink'
+	option band '2.4G'
+	option channel '0'
+	option auotch '2'
+	option wifimode '9'
+	option bw '1'
+	option country 'None'
+	option region '5'
+	option bgprotect '0'
+	option beacon '100'
+	option dtim '1'
+	option fragthres '2346'
+	option rtsthres '2347'
+	option txpower '100'
+	option txpreamble '0'
+	option shortslot '1'
+	option txburst '1'
+	option pktaggre '1'
+	option ieee80211h '0'
+	option ht_bsscoexist '0'
+	option ht_extcha '1'
+	option ht_opmode '0'
+	option ht_gi '1'
+	option ht_rdg '0'
+	option ht_stbc '1'
+	option ht_amsdu '0'
+	option ht_autoba '1'
+	option ht_badec '0'
+	option ht_distkip '1'
+	option ht_ldpc '0'
+	option ht_txstream '2'
+	option ht_rxstream '2'
 
 config wifi-iface
-        option device   mt7620
-        option ifname   ra0
-        option network  lan
-        option mode     ap
-        option ssid     $ssid
-        option encryption psk2
-        option key      12345678
-
+	option device 'mt7620'
+	option ifname 'ra0'
+	option network 'lan'
+	option mode 'ap'
+	option ssid $ssid
+	option key '12345678'
+	option wmm '1'
+	option apsd '0'
+	option encryption 'psk2+ccmp'
 EOF
 
 
