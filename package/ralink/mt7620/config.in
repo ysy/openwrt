@@ -1,4 +1,4 @@
-if PACKAGE_kmod-rt2860v2
+if PACKAGE_kmod-mt7620
 config RT2860V2_AP
 	bool #"Ralink RT2860 802.11n AP support"
 #	depends on NET_RADIO 
