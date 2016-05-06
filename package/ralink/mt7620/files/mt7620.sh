@@ -11,15 +11,6 @@ scan_mt7620() {
 	scan_ralink_wifi mt7620 mt7620
 }
 
-
-disable_mt7620() {
-	disable_ralink_wifi mt7620
-}
-
-enable_mt7620() {
-	enable_ralink_wifi mt7620 mt7620
-}
-
 detect_mt7620() {
 #	detect_ralink_wifi mt7620 mt7620
 	ssid=mt7620-`ifconfig eth0 | grep HWaddr | cut -c 51- | sed 's/://g'`

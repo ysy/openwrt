@@ -65,6 +65,7 @@ define KernelPackage/mt7620/install
 	$(INSTALL_BIN) ./files/mt7620.sh $(1)/lib/wifi/
 	$(INSTALL_DIR) $(1)/lib/netifd/wireless
 	$(INSTALL_BIN) ./files/mt7620_netifd.sh $(1)/lib/netifd/wireless/mt7620.sh
+	$(INSTALL_BIN) ./files/ralink-netifd.sh $(1)/lib/netifd/ralink-netifd.sh
 	
 	$(INSTALL_DIR) $(1)/etc/wireless/mt7620/
 	$(INSTALL_BIN) ./files/mt7620.dat $(1)/etc/wireless/mt7620/
