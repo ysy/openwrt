@@ -68,7 +68,6 @@ define KernelPackage/mt7620/install
 	$(INSTALL_BIN) ./files/ralink-netifd.sh $(1)/lib/netifd/ralink-netifd.sh
 	
 	$(INSTALL_DIR) $(1)/etc/wireless/mt7620/
-	$(INSTALL_BIN) ./files/mt7620.dat $(1)/etc/wireless/mt7620/
 	$(INSTALL_BIN) ./files/SingleSKU.dat $(1)/etc/wireless/mt7620/
 	-if [ "$$(CONFIG_INTERNAL_PA_INTERNAL_LNA)" = "y" ]; then \
 		$(INSTALL_BIN) ./files/mt7620.eeprom.ipa.ilna.bin $(1)/etc/wireless/mt7620/mt7620.eeprom.bin; \

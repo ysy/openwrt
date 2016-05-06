@@ -3,8 +3,8 @@
 ralink_sync_uci_with_dat() {
     echo "sync_uci_with_dat($1,$2,$3,$4)" >>/tmp/wifi.log
     local device="$1"
-    local datpath="/etc/wireless/$device/$device.dat"
-    uci2dat -d $device -f $datpath > /tmp/uci2dat.log
+    ln -s  /tmp/"$device".dat /etc/wireless/$device/$device.dat
+    uci2dat -d $device -f /tmp/$device.dat > /tmp/uci2dat.log
 }
 
 ralink_setup_interface() {                            

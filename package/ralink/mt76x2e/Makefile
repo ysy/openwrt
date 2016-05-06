@@ -85,7 +85,6 @@ define KernelPackage/mt76x2e/install
 	$(INSTALL_DIR) $(1)/lib/netifd/wireless/
 	$(INSTALL_BIN) ./files/mt7612e.sh $(1)/lib/wifi/
 	$(INSTALL_BIN) ./files/ralink_common.sh $(1)/lib/wifi/
-	$(INSTALL_BIN) ./files/mt7612e.dat $(1)/etc/wireless/mt7612e/
 	$(INSTALL_BIN) ./files/SingleSKU.dat $(1)/etc/wireless/mt7612e/SingleSKU.dat
 	$(INSTALL_BIN) ./files/mt7612e_netifd.sh $(1)/lib/netifd/wireless/mt7612e.sh
 	echo p$(PKG_REV) > $(1)/etc/wireless/mt7612e/version
