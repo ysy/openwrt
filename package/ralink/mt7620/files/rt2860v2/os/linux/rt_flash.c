@@ -123,10 +123,10 @@ int ra_mtd_read_nm(char *name, loff_t from, size_t len, u_char *buf)
 	return ret;
 }
 
-EXPORT_SYMBOL(ra_mtd_write_nm);
-EXPORT_SYMBOL(ra_mtd_read_nm);
-EXPORT_SYMBOL(procRegDir);
+//EXPORT_SYMBOL(ra_mtd_write_nm);
+//EXPORT_SYMBOL(ra_mtd_read_nm);
+//EXPORT_SYMBOL(procRegDir);
 
-MODULE_AUTHOR("Steven Liu <steven_liu@ralinktech.com.tw>");
-MODULE_DESCRIPTION("Ralink APSoC Flash Map");
-MODULE_LICENSE("GPL");
+//MODULE_AUTHOR("Steven Liu <steven_liu@ralinktech.com.tw>");
+//MODULE_DESCRIPTION("Ralink APSoC Flash Map");
+//MODULE_LICENSE("GPL");

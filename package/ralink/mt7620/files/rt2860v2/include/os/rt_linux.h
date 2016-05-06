@@ -139,7 +139,7 @@ typedef struct usb_ctrlrequest devctrlrequest;
 #define RTMP_FIRMWARE_FILE_NAME		"/etc_ro/Wireless/RT2860AP/RT2860AP.bin"
 #define PROFILE_PATH			"/etc/Wireless/RT2860i.dat"
 #endif /* P2P_SUPPORT */
-#define AP_PROFILE_PATH_RBUS		"/etc/Wireless/RT2860/RT2860.dat"
+#define AP_PROFILE_PATH_RBUS		"/etc/wireless/mt7620/mt7620.dat"
 #define RT2880_AP_DRIVER_VERSION	"1.0.0.0"
 #endif /* RTMP_RBUS_SUPPORT */
 #endif /* CONFIG_AP_SUPPORT */
@@ -167,7 +167,7 @@ extern	const struct iw_handler_def rt28xx_iw_handler_def;
 
 #ifdef SINGLE_SKU_V2
 #ifdef RTMP_RBUS_SUPPORT
-#define SINGLE_SKU_TABLE_FILE_NAME	"/etc_ro/Wireless/RT2860AP/SingleSKU.dat"
+#define SINGLE_SKU_TABLE_FILE_NAME	"/etc/wireless/mt7620/SingleSKU.dat"
 #endif /* RTMP_RBUS_SUPPORT */
 #endif /* SINGLE_SKU_V2 */
 
