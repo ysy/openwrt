@@ -12,7 +12,7 @@ ralink_setup_interface() {
         local config="$2" 
                 
         [ -n "$config" ] || return 0
-	ubus call network.interface.lan add_device "{ \"name\": \"ra0\" }"
+	ubus call network.interface.lan add_device "{ \"name\": \"$iface\" }"
 }
 
 
