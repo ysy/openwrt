@@ -6,7 +6,7 @@ EXTRA_CFLAGS += -DCONFIG_RALINK_MT7620
 endif
 
 obj-m += $(DRV_NAME).o  
-#obj-$(CONFIG_$(DRV_NAME)) += $(DRV_NAME)_3.10_dep.o
+#obj-$(CONFIG_RT2860V2_AP) += $(DRV_NAME)_3.10_dep.o
 
 $(DRV_NAME)-objs += ../rt2860v2/common/crypt_md5.o
 $(DRV_NAME)-objs += ../rt2860v2/common/crypt_sha2.o
@@ -85,39 +85,39 @@ $(DRV_NAME)-objs +=  ../rt2860v2/common/rtmp_swmcu.o
 $(DRV_NAME)-objs +=  ../rt2860v2/chips/rtmp_chip.o
 $(DRV_NAME)-objs +=  ../rt2860v2/common/rt_rf.o
 
-ifeq ($(CONFIG_$(DRV_NAME)_WMM_ACM),y)
+ifeq ($(CONFIG_RT2860V2_AP_WMM_ACM),y)
 $(DRV_NAME)-objs += ../rt2860v2/common/acm_edca.o
 $(DRV_NAME)-objs += ../rt2860v2/common/acm_comm.o
 $(DRV_NAME)-objs += ../rt2860v2/common/acm_iocl.o
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_LED),y)
+ifeq ($(CONFIG_RT2860V2_AP_LED),y)
 $(DRV_NAME)-objs += ../rt2860v2/common/rt_led.o
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_WSC),y)
+ifeq ($(CONFIG_RT2860V2_AP_WSC),y)
 $(DRV_NAME)-objs += ../rt2860v2/common/wsc.o 
 $(DRV_NAME)-objs += ../rt2860v2/common/wsc_tlv.o
 $(DRV_NAME)-objs += ../rt2860v2/common/crypt_dh.o
 $(DRV_NAME)-objs += ../rt2860v2/common/crypt_biginteger.o
 $(DRV_NAME)-objs += ../rt2860v2/common/wsc_ufd.o
-ifeq ($(CONFIG_$(DRV_NAME)_WSC_V2),y)
+ifeq ($(CONFIG_RT2860V2_AP_WSC_V2),y)
 $(DRV_NAME)-objs += ../rt2860v2/common/wsc_v2.o
 endif
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_WDS),y)
+ifeq ($(CONFIG_RT2860V2_AP_WDS),y)
 $(DRV_NAME)-objs += ../rt2860v2/ap/ap_wds.o
 $(DRV_NAME)-objs += ../rt2860v2/ap/ap_wds_inf.o
 $(DRV_NAME)-objs += ../rt2860v2/common/client_wds.o
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_MBSS),y)
+ifeq ($(CONFIG_RT2860V2_AP_MBSS),y)
 $(DRV_NAME)-objs += ../rt2860v2/ap/ap_mbss.o
 $(DRV_NAME)-objs += ../rt2860v2/ap/ap_mbss_inf.o
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_APCLI),y)
+ifeq ($(CONFIG_RT2860V2_AP_APCLI),y)
 $(DRV_NAME)-objs += ../rt2860v2/ap/ap_apcli.o
 $(DRV_NAME)-objs += ../rt2860v2/ap/ap_apcli_inf.o
 $(DRV_NAME)-objs += ../rt2860v2/ap/apcli_assoc.o
@@ -130,37 +130,37 @@ $(DRV_NAME)-objs += ../rt2860v2/common/cmm_mat_pppoe.o
 $(DRV_NAME)-objs += ../rt2860v2/common/cmm_mat_ipv6.o
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_MAC_REPEATER),y)
+ifeq ($(CONFIG_RT2860V2_AP_MAC_REPEATER),y)
 $(DRV_NAME)-objs += ../rt2860v2/ap/ap_repeater.o
 endif
 
-#ifeq ($(CONFIG_$(DRV_NAME)_WAPI),y)
+#ifeq ($(CONFIG_RT2860V2_AP_WAPI),y)
 #$(DRV_NAME)-objs += ../rt2860v2/common/wapi.o
 #$(DRV_NAME)-objs += wapi_crypt.obj
 #$(DRV_NAME)-objs += wapi_sms4.obj
 #endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_IGMP_SNOOP),y)
+ifeq ($(CONFIG_RT2860V2_AP_IGMP_SNOOP),y)
 $(DRV_NAME)-objs += ../rt2860v2/common/igmp_snoop.o
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_NETIF_BLOCK),y)
+ifeq ($(CONFIG_RT2860V2_AP_NETIF_BLOCK),y)
 $(DRV_NAME)-objs += ../rt2860v2/common/netif_block.o
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_DFS),y)
+ifeq ($(CONFIG_RT2860V2_AP_DFS),y)
 $(DRV_NAME)-objs += ../rt2860v2/common/cmm_dfs.o
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_CARRIER),y)
+ifeq ($(CONFIG_RT2860V2_AP_CARRIER),y)
 $(DRV_NAME)-objs += ../rt2860v2/common/cmm_cs.o
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_DLS),y)
+ifeq ($(CONFIG_RT2860V2_AP_DLS),y)
 $(DRV_NAME)-objs += ../rt2860v2/ap/ap_dls.o
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_IDS),y)
+ifeq ($(CONFIG_RT2860V2_AP_IDS),y)
 $(DRV_NAME)-objs += ../rt2860v2/ap/ap_ids.o
 endif
 
@@ -178,7 +178,7 @@ endif
 #$(DRV_NAME)-objs += ../rt2860v2/common/rrm.o
 #endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_VIDEO_TURBINE),y)
+ifeq ($(CONFIG_RT2860V2_AP_VIDEO_TURBINE),y)
 $(DRV_NAME)-objs += ../rt2860v2/common/cmm_video.o
 endif
 
@@ -189,7 +189,7 @@ endif
 ifeq ($(CONFIG_RALINK_RT2883),y)
 $(DRV_NAME)-objs += ../rt2860v2/common/rt_rf.o
 $(DRV_NAME)-objs += ../rt2860v2/chips/rt2883.o
-ifeq ($(CONFIG_$(DRV_NAME)_TXBF),y)
+ifeq ($(CONFIG_RT2860V2_AP_TXBF),y)
 $(DRV_NAME)-objs +=  ../rt2860v2/common/cmm_txbf.o
 endif
 endif
@@ -197,7 +197,7 @@ endif
 ifeq ($(CONFIG_RALINK_RT3883),y)
 $(DRV_NAME)-objs += ../rt2860v2/common/rt_rf.o
 $(DRV_NAME)-objs += ../rt2860v2/chips/rt3883.o
-ifeq ($(CONFIG_$(DRV_NAME)_TXBF),y)
+ifeq ($(CONFIG_RT2860V2_AP_TXBF),y)
 $(DRV_NAME)-objs +=  ../rt2860v2/common/cmm_txbf.o
 $(DRV_NAME)-objs +=  ../rt2860v2/common/cmm_txbf_cal.o
 endif
@@ -264,7 +264,7 @@ endif
 
 ifeq ($(CONFIG_RALINK_RT2883),y)
 EXTRA_CFLAGS += -DRT2883 -DDOT11N_SS3_SUPPORT -DA_BAND_SUPPORT -DRTMP_RF_RW_SUPPORT
-ifeq ($(CONFIG_$(DRV_NAME)_TXBF),y)
+ifeq ($(CONFIG_RT2860V2_AP_TXBF),y)
 EXTRA_CFLAGS += -DTXBF_SUPPORT
 endif
 endif
@@ -274,7 +274,7 @@ EXTRA_CFLAGS += -DRT3883 -DDOT11N_SS3_SUPPORT -DA_BAND_SUPPORT -DRTMP_RF_RW_SUPP
 EXTRA_CFLAGS += -DRTMP_FLASH_SUPPORT -DCONFIG_SWMCU_SUPPORT
 EXTRA_CFLAGS += -DSPECIFIC_BCN_BUF_SUPPORT -DVCORECAL_SUPPORT
 EXTRA_CFLAGS += -DRANGE_EXT_SUPPORT
-ifeq ($(CONFIG_$(DRV_NAME)_TXBF),y)
+ifeq ($(CONFIG_RT2860V2_AP_TXBF),y)
 EXTRA_CFLAGS += -DTXBF_SUPPORT
 endif
 EXTRA_CFLAGS += -DSTREAM_MODE_SUPPORT -DFIFO_EXT_SUPPORT
@@ -337,20 +337,20 @@ EXTRA_CFLAGS += -DRT6352_EP_SUPPORT -DRT6352_EL_SUPPORT
 endif
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_DLS),y)
+ifeq ($(CONFIG_RT2860V2_AP_DLS),y)
 EXTRA_CFLAGS += -DQOS_DLS_SUPPORT
 EXTRA_CFLAGS += -DAP_DLS_SUPPORT
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_IDS),y)
+ifeq ($(CONFIG_RT2860V2_AP_IDS),y)
 EXTRA_CFLAGS += -DIDS_SUPPORT
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_DFS),y)
+ifeq ($(CONFIG_RT2860V2_AP_DFS),y)
 EXTRA_CFLAGS += -DDFS_SUPPORT
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_CARRIER),y)
+ifeq ($(CONFIG_RT2860V2_AP_CARRIER),y)
 EXTRA_CFLAGS += -DCARRIER_DETECTION_SUPPORT
 endif
 
@@ -358,7 +358,7 @@ ifeq ($(CONFIG_RT2860V2_AUTO_CH_SELECT_ENCANCE),y)
 EXTRA_CFLAGS += -DAUTO_CH_SELECT_ENHANCE
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_80211N_DRAFT3),y)
+ifeq ($(CONFIG_RT2860V2_AP_80211N_DRAFT3),y)
 EXTRA_CFLAGS += -DDOT11N_DRAFT3
 endif
 
@@ -370,33 +370,33 @@ ifeq ($(CONFIG_RT2860V2_MCAST_RATE_SPECIFIC),y)
 EXTRA_CFLAGS += -DMCAST_RATE_SPECIFIC
 endif
 
-#ifeq ($(CONFIG_$(DRV_NAME)_WMM_ACM),y)
+#ifeq ($(CONFIG_RT2860V2_AP_WMM_ACM),y)
 #EXTRA_CFLAGS += -DWMM_ACM_SUPPORT
 #endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_LED),y)
+ifeq ($(CONFIG_RT2860V2_AP_LED),y)
 EXTRA_CFLAGS += -DLED_CONTROL_SUPPORT -DCONFIG_SWMCU_SUPPORT
-ifeq ($(CONFIG_$(DRV_NAME)_WSC),y)
+ifeq ($(CONFIG_RT2860V2_AP_WSC),y)
 EXTRA_CFLAGS += -DWSC_LED_SUPPORT
 endif
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_WSC),y)
+ifeq ($(CONFIG_RT2860V2_AP_WSC),y)
 EXTRA_CFLAGS += -DWSC_AP_SUPPORT
-ifeq ($(CONFIG_$(DRV_NAME)_WSC_V2),y)
+ifeq ($(CONFIG_RT2860V2_AP_WSC_V2),y)
 EXTRA_CFLAGS += -DWSC_V2_SUPPORT
 endif
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_LLTD),y)
+ifeq ($(CONFIG_RT2860V2_AP_LLTD),y)
 EXTRA_CFLAGS += -DLLTD_SUPPORT
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_WDS),y)
+ifeq ($(CONFIG_RT2860V2_AP_WDS),y)
 EXTRA_CFLAGS += -DWDS_SUPPORT
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_MBSS),y)
+ifeq ($(CONFIG_RT2860V2_AP_MBSS),y)
 EXTRA_CFLAGS += -DMBSS_SUPPORT
 endif
 
@@ -410,27 +410,27 @@ EXTRA_CFLAGS += -DENHANCE_NEW_MBSSID_MODE
 endif
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_APCLI),y)
+ifeq ($(CONFIG_RT2860V2_AP_APCLI),y)
 EXTRA_CFLAGS += -DAPCLI_SUPPORT
 EXTRA_CFLAGS += -DMAT_SUPPORT
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_MAC_REPEATER),y)
+ifeq ($(CONFIG_RT2860V2_AP_MAC_REPEATER),y)
 ifeq ($(CONFIG_SOC_MT7620),y)
 EXTRA_CFLAGS += -DMAC_APCLI_SUPPORT
 endif
 EXTRA_CFLAGS += -DMAC_REPEATER_SUPPORT
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_32B_DESC),y)
+ifeq ($(CONFIG_RT2860V2_AP_32B_DESC),y)
 EXTRA_CFLAGS += -DDESC_32B_SUPPORT
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_IGMP_SNOOP),y)
+ifeq ($(CONFIG_RT2860V2_AP_IGMP_SNOOP),y)
 EXTRA_CFLAGS += -DIGMP_SNOOP_SUPPORT
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_NETIF_BLOCK),y)
+ifeq ($(CONFIG_RT2860V2_AP_NETIF_BLOCK),y)
 EXTRA_CFLAGS += -DBLOCK_NET_IF
 endif
 
@@ -438,14 +438,14 @@ ifeq ($(CONFIG_RT2860V2_HW_ANTENNA_DIVERSITY),y)
 EXTRA_CFLAGS   += -DHW_ANTENNA_DIVERSITY_SUPPORT
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_WAPI),y)
+ifeq ($(CONFIG_RT2860V2_AP_WAPI),y)
 EXTRA_CFLAGS   += -DWAPI_SUPPORT
 ifeq ($(CONFIG_RALINK_RT3052),y)
 EXTRA_CFLAGS   += -DSOFT_ENCRYPT
 endif
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_COC),y)
+ifeq ($(CONFIG_RT2860V2_AP_COC),y)
 EXTRA_CFLAGS   += -DGREENAP_SUPPORT -DCOC_SUPPORT
 endif
 
@@ -457,13 +457,13 @@ ifeq ($(CONFIG_KTHREAD),y)
 EXTRA_CFLAGS   += -DKTHREAD_SUPPORT
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_MEMORY_OPTIMIZATION),y)
+ifeq ($(CONFIG_RT2860V2_AP_MEMORY_OPTIMIZATION),y)
 EXTRA_CFLAGS   += -DMEMORY_OPTIMIZATION
 else
 EXTRA_CFLAGS   += -DDBG
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_VIDEO_TURBINE),y)
+ifeq ($(CONFIG_RT2860V2_AP_VIDEO_TURBINE),y)
 EXTRA_CFLAGS   += -DVIDEO_TURBINE_SUPPORT
 endif
 
@@ -471,15 +471,15 @@ ifeq ($(CONFIG_RA_NETWORK_WORKQUEUE_BH),y)
 EXTRA_CFLAGS   += -DWORKQUEUE_BH
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_INTELLIGENT_RATE_ADAPTION),y)
+ifeq ($(CONFIG_RT2860V2_AP_INTELLIGENT_RATE_ADAPTION),y)
 EXTRA_CFLAGS   += -DNEW_RATE_ADAPT_SUPPORT
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_RTMP_INTERNAL_TX_ALC),y)
+ifeq ($(CONFIG_RT2860V2_AP_RTMP_INTERNAL_TX_ALC),y)
 EXTRA_CFLAGS   += -DRTMP_INTERNAL_TX_ALC
 endif
 
-ifeq ($(CONFIG_$(DRV_NAME)_RTMP_TEMPERATURE_COMPENSATION),y)
+ifeq ($(CONFIG_RT2860V2_AP_RTMP_TEMPERATURE_COMPENSATION),y)
 EXTRA_CFLAGS   += -DRTMP_TEMPERATURE_COMPENSATION
 endif
 
