@@ -1,12 +1,21 @@
 if PACKAGE_kmod-mt7620
+
+config RALINK_MT7620
+	bool
+	default y
+
+config RALINK_RT3052
+	bool
+	default y
+	depends on TARGET_ramips_rt305x
+
 config RT2860V2_AP
-	bool #"Ralink RT2860 802.11n AP support"
-#	depends on NET_RADIO 
+	tristate "Ralink RT2860 802.11n AP support"
 	select WIRELESS_EXT
 	select WEXT_SPY
 	select WEXT_PRIV
-	default y
-	
+	default y	
+
 config RT2860V2_AP_V24_DATA_STRUCTURE
 	bool
 	depends on RT2860V2_AP
@@ -15,23 +24,17 @@ config RT2860V2_AP_V24_DATA_STRUCTURE
 config  RT2860V2_AP_LED
 	bool "LED Support"
 	depends on RT2860V2_AP
-
-config  RT2860V2_AP_WSC
-	bool "WSC (WiFi Simple Config)"
-	depends on RT2860V2_AP
-
-config  RT2860V2_AP_WSC_V2
-        bool "WSC 2.0(WiFi Simple Config 2.0)"
-        depends on RT2860V2_AP_WSC
-        default y
+	default y
 
 config  RT2860V2_AP_LLTD
 	bool "LLTD (Link Layer Topology Discovery Protocol)"
 	depends on RT2860V2_AP
+	default y
 
 config  RT2860V2_AP_WDS
 	bool "WDS"
 	depends on RT2860V2_AP
+	default y
 
 #config  RT2860V2_AP_WMM_ACM
 #	bool "WMM ACM"
@@ -40,6 +43,7 @@ config  RT2860V2_AP_WDS
 config  RT2860V2_AP_MBSS
 	bool "MBSSID"
 	depends on RT2860V2_AP
+	default y
 
 config	NEW_MBSSID_MODE
 	bool "New MBSSID MODE"
@@ -51,13 +55,14 @@ config	NEW_MBSSID_MODE
 config  RT2860V2_AP_APCLI
 	bool "AP-CLient Support"
 	depends on RT2860V2_AP
+	default y
 
 config  RT2860V2_AP_MAC_REPEATER
 	bool "MAC Repeater Support"
 	depends on RT2860V2_AP
 	depends on RT2860V2_AP_APCLI
 	depends on RALINK_RT6352 || RALINK_MT7620
-	default n
+	default y
 
 config  RT2860V2_AP_IGMP_SNOOP
 	bool "IGMP snooping"
@@ -139,6 +144,7 @@ config  RT2860V2_AP_TXBF
 config  RT2860V2_AP_80211N_DRAFT3
 	bool "802.11n Draft3"
 	depends on RT2860V2_AP
+	default y
 
 #config  RT2860V2_AP_RTMP_INTERNAL_TX_ALC
 #        bool "TSSI Compensation"
@@ -174,7 +180,7 @@ config  RT2860V2_AP_RTMP_INTERNAL_TX_ALC
         depends on RT2860V2_AP
         depends on RALINK_RT3350 || RALINK_RT3352 || RALINK_RT5350 || RALINK_MT7620 || RALINK_RT6352
         depends on INTERNAL_PA_INTERNAL_LNA || INTERNAL_PA_EXTERNAL_LNA
-	default n
+	default y
 
 config  RT2860V2_AP_RTMP_TEMPERATURE_COMPENSATION
         bool "Temperature Compensation"
@@ -197,4 +203,10 @@ config  RT2860V2_AP_RTMP_TEMPERATURE_COMPENSATION
 #config  RT2860V2_SNMP
 #	bool "Net-SNMP Support"
 #	depends on RT2860V2_AP
+
+config  RT2860V2_AP_DBG
+	bool "Debug support for AP mode"
+	default y
+	depends on RT2860V2_AP
+
 endif

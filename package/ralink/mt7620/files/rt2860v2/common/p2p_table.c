@@ -436,7 +436,7 @@ VOID P2pCopyP2PTabtoMacTab(
  */
 VOID P2pGroupTabInit(
 	IN PRTMP_ADAPTER pAd) 
-{
+{
 	PRT_P2P_TABLE	Tab = &pAd->P2pTable;
 	UCHAR		i;
 	

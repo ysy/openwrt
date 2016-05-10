@@ -1,9 +1,5 @@
 EXTRA_CFLAGS = -Idrivers/net/wireless/rt2860v2/include -Idrivers/net/wireless/rt2860v2/ate/include
 
-ifeq ($(CONFIG_SOC_MT7620),y)
-EXTRA_CFLAGS += -DCONFIG_RALINK_MT7620
-endif
-
 obj-$(CONFIG_RT2860V2_STA) += rt2860v2_sta.o
 
 rt2860v2_sta-objs += ../rt2860v2/common/crypt_md5.o
@@ -122,7 +118,7 @@ rt2860v2_sta-objs +=  ../rt2860v2/chips/rt6352.o
 rt2860v2_sta-objs +=  ../rt2860v2/ate/chips/rt6352_ate.o
 endif
 
-ifeq ($(CONFIG_SOC_MT7620),y)
+ifeq ($(CONFIG_RALINK_MT7620),y)
 rt2860v2_sta-objs +=  ../rt2860v2/common/rt_rf.o
 rt2860v2_sta-objs +=  ../rt2860v2/chips/rt6352.o
 rt2860v2_sta-objs +=  ../rt2860v2/ate/chips/rt6352_ate.o
@@ -287,7 +283,7 @@ EXTRA_CFLAGS += -DENHANCED_STAT_DISPLAY
 EXTRA_CFLAGS += -DRTMP_TEMPERATURE_CALIBRATION
 endif
 
-ifeq ($(CONFIG_SOC_MT7620),y)
+ifeq ($(CONFIG_RALINK_MT7620),y)
 EXTRA_CFLAGS += -DRT6352 -DRTMP_RF_RW_SUPPORT -DRF_BANK -DRTMP_FLASH_SUPPORT -DCONFIG_SWMCU_SUPPORT
 EXTRA_CFLAGS += -DRESOURCE_PRE_ALLOC
 EXTRA_CFLAGS += -DVCORECAL_SUPPORT
