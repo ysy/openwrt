@@ -1,0 +1,40 @@
+--- a/build/Makefile
++++ b/build/Makefile
+@@ -1,14 +1,17 @@
+-ifeq ($(CONFIG_SUPPORT_OPENWRT),y)
++#ifeq ($(CONFIG_SUPPORT_OPENWRT),y)
++CONFIG_SUPPORT_OPENWRT=y
++
+ EXTRA_CFLAGS = -I$(src)/../src/include -I$(src)/../src/ate/include
++EXTRA_CFLAGS += -DCONFIG_SUPPORT_OPENWRT
+ DRV_NAME = mt7603e
+ SRC_DIR = ../src
+ obj-m += $(DRV_NAME).o
+-else
+-EXTRA_CFLAGS = -Idrivers/net/wireless/mt_wifi/include -Idrivers/net/wireless/mt_wifi/ate/include
+-DRV_NAME = mt_wifi
+-SRC_DIR = ../mt_wifi
+-obj-$(CONFIG_RT2860V2_AP) += $(DRV_NAME).o
+-endif
++#else
++#EXTRA_CFLAGS = -Idrivers/net/wireless/mt_wifi/include -Idrivers/net/wireless/mt_wifi/ate/include
++#DRV_NAME = mt_wifi
++#SRC_DIR = ../mt_wifi
++#obj-$(CONFIG_RT2860V2_AP) += $(DRV_NAME).o
++#endif
+ 
+ WIFI_HEAD_GEN  = $(shell make -C drivers/net/wireless/mt_wifi RT28xx_MODE=AP CHIPSET=mt7603e EE_TYPE=$(CONFIG_MT_PA_LNA) sdk_build_tools >/dev/null)
+ 
+--- a/src/os/linux/rt_linux.c
++++ b/src/os/linux/rt_linux.c
+@@ -888,8 +888,8 @@ static inline void __RtmpOSFSInfoChange(
+       pOSFSInfo->fsuid = (int)uid.val;
+       pOSFSInfo->fsgid = (int)gid.val;
+ #else
+-		pOSFSInfo->fsuid = (int)(current_fsuid());
+-		pOSFSInfo->fsgid = (int)(current_fsgid());
++		pOSFSInfo->fsuid = 0;//(int)(current_fsuid());
++		pOSFSInfo->fsgid = 0;//(int)(current_fsgid());
+ 
+ #endif
+ #endif
