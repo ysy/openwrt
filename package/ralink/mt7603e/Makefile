@@ -72,8 +72,11 @@ define KernelPackage/mt7603e/install
 	$(INSTALL_DIR) $(1)/lib/wifi/
 	$(INSTALL_BIN) ./files/mt7603e.sh $(1)/lib/wifi/
 	$(INSTALL_DIR) $(1)/etc/wireless/mt7603e/
-	$(INSTALL_BIN) ./files/mt7603e.dat $(1)/etc/wireless/mt7603e/
-	-$(INSTALL_BIN) ./files/mt7603e.eeprom.bin $(1)/etc/wireless/mt7603e/
+	$(INSTALL_BIN) ./files/mt7603e.eeprom.bin $(1)/etc/wireless/mt7603e/
+	$(INSTALL_DIR) $(1)/lib/netifd/wireless
+	$(INSTALL_BIN) ./files/mt7603e_netifd.sh $(1)/lib/netifd/wireless/mt7603e.sh
+	$(INSTALL_BIN) ./files/ralink-netifd.sh $(1)/lib/netifd/ralink-netifd.sh
+
 	echo p$(P4REV) > $(1)/etc/wireless/mt7603e/version
 endef
 
