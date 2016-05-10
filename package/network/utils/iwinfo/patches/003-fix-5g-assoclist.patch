@@ -1,0 +1,13 @@
+Index: libiwinfo-2015-06-01/iwinfo_ra.c
+===================================================================
+--- libiwinfo-2015-06-01.orig/iwinfo_ra.c	2016-05-09 20:45:34.774542085 +0800
++++ libiwinfo-2015-06-01/iwinfo_ra.c	2016-05-09 20:46:45.350542706 +0800
+@@ -610,7 +610,7 @@
+ 	
+ 	RT_802_11_MAC_TABLE *a = &table;
+ 	
+-	char iface[4];
++	char iface[10];
+ 	
+     *len = a->Num * sizeof(struct iwinfo_assoclist_entry);
+ 	
