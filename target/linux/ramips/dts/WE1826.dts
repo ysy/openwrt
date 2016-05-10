@@ -53,6 +53,12 @@
 				ralink,group = "i2c", "uartf";
 				ralink,function = "gpio";
 			};
+
+			wled {
+                                ralink,group = "wled";
+                                ralink,function = "wled";
+                        };
+
 		};
 	};
 
