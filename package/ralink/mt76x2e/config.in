@@ -275,7 +275,7 @@ config MT76X2E_RTMP_FLASH_SUPPORT
 
 config MT76X2E_LED_CONTROL_SUPPORT
 	bool "LED Support"
-	default n
+	default y
 
 #config MT76X2E_SINGLE_SKU
 #	bool "Single SKU"

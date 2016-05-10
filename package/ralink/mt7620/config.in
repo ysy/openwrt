@@ -15,6 +15,7 @@ config RT2860V2_AP_V24_DATA_STRUCTURE
 config  RT2860V2_AP_LED
 	bool "LED Support"
 	depends on RT2860V2_AP
+	default y
 
 config  RT2860V2_AP_WSC
 	bool "WSC (WiFi Simple Config)"
