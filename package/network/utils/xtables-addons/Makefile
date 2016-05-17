@@ -60,6 +60,11 @@ define Build/Install
 		install
 endef
 
+define Build/InstallDev
+	$(INSTALL_DIR) $(1)/usr/lib
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/lib/libxt_ACCOUNT_cl.so  $(1)/usr/lib
+endef 
+
 # 1: extension/module suffix used in package name
 # 2: extension/module display name used in package title/description
 # 3: list of extensions to package
@@ -114,7 +119,7 @@ endef
 define Package/iptaccount/install
 	$(INSTALL_DIR) $(1)/usr/lib
 	$(INSTALL_DIR) $(1)/usr/sbin
-	$(CP) \
+	$(INSTALL_DATA) \
 		$(PKG_INSTALL_DIR)/usr/lib/libxt_ACCOUNT_cl.so* \
 		$(1)/usr/lib/
 	$(CP) \
