@@ -1,0 +1,14 @@
+--- a/build/Makefile
++++ b/build/Makefile
+@@ -751,6 +751,11 @@ EXTRA_CFLAGS += -DTHERMAL_PROTECT_SUPPOR
+ endif
+ endif
+ 
++
++ifeq ($(CONFIG_MULTI_CORE_SUPPORT), y)
++EXTRA_CFLAGS += -DMULTI_CORE_SUPPORT
++endif
++
+ # For OpenWrt compatibility
+ ifeq ($(CONFIG_SUPPORT_OPENWRT),y)
+ EXTRA_CFLAGS += -DCONFIG_RT_FIRST_CARD=$(CONFIG_RT_FIRST_CARD)
