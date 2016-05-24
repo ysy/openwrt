@@ -32,7 +32,13 @@
 
 #include  "log.h"
 #include "libxt_ACCOUNT_cl.h"
-
+static char cmd[1024];
+#define RUN_CMD(fmt, args...) \
+	do{  \
+		sprintf(cmd, fmt, ##args); \
+		system(cmd); \
+	} while(0);  
+	
 bool exit_now = false;
 static int interval = 10;
 static int pass_sec =10;
@@ -73,8 +79,8 @@ static pthread_mutex_t lock;
 struct ip_acc 
 {
 	bool  has_data;
-	uint32_t pkt_total;
-	uint32_t byte_total;	
+	uint64_t pkt_total;
+	uint64_t byte_total;
 };
 
 
@@ -119,31 +125,81 @@ const char * json_get_string(json_object * root, const char * key)
 	return str;
 }
 
+void load_config()
+{
+	char buf[1024];
+	FILE * fp = fopen("/etc/tmon.conf", "r");
+	if (fp ==NULL) 
+		return;
+	
+	if (fgets(buf, 1024, fp)) 
+	{
+		const char *  on_off = strtok(buf, " ");
+		const char *  interval_str = strtok(NULL, " ");
+		if (on_off != NULL && !strncmp(on_off, "off", 3) )
+				enabled = false;
+		else
+				enabled = true;
+			
+		if (interval_str != NULL)
+				interval = atoi(interval_str);
+		LOG("Loading config: enabled : %d  interval: %d", enabled, interval);
+	}
+	fclose(fp);
+}
+
+void save_config()
+{
+	FILE * fp = fopen("/etc/tmon.conf", "w");
+	if (fp ==NULL)
+		return;
+	fprintf(fp, "%s %d", enabled?"on":"off", interval);
+	fclose(fp);
+}
+
+void clear_iptables_account()
+{
+	char cmd[1024];
+	char buf[1024];
+	system("iptables-save | grep ACCOUNT  > /tmp/iptables_account.txt");
+	FILE * fp = fopen("/tmp/iptables_account.txt", "r");
+	
+	if (fp == NULL) 
+	{
+		LOG("ERROR: error when clear iptables account");
+		exit(-1);
+	}
+	
+	while(fgets(buf, 1024, fp)) 
+	{
+		if (buf[0] == '-' && buf[1] == 'A') 
+		{
+			buf[1] = 'D';
+			RUN_CMD("iptables %s", buf);
+		}
+	}
+	fclose(fp);
+}
+
 int check_iptables()
 {
 	int ret = 0;	
-	char command[256];
 	char netip_str[20];
 		
 	system("uci get network.lan.ipaddr > /tmp/lan_ip_addr.txt");
 	get_string_from_file("/tmp/lan_ip_addr.txt", netip_str);
 	net_ip = inet_addr(netip_str);
 	
+
 	unsigned char * bytes = (unsigned char * ) &net_ip;
 	LOG("%u.%u.%u.%u", bytes[0], bytes[1], bytes[2], bytes[3]);
 	
-	system("/etc/init.d/firewall restart");
-	system("iptaccount -h");
-	{
-		sprintf(command, "iptables  -I FORWARD 1  -j ACCOUNT  --addr %s/24 --tname all", netip_str);
-		system(command);
-		sprintf(command, " iptables -I FORWARD 1 -p udp -j ACCOUNT --addr %s/24 --tname udp", netip_str);
-		system(command);
-		sprintf(command, " iptables -I FORWARD 1 -p icmp -j ACCOUNT --addr %s/24 --tname icmp", netip_str);
-		system(command);
-		sprintf(command, " iptables -I FORWARD 1 -p tcp --syn -j ACCOUNT --addr %s/24 --tname syn", netip_str);
-		system(command);		
-	}
+	clear_iptables_account();
+	RUN_CMD("iptaccount -h");
+	RUN_CMD("iptables -I FORWARD 1 -j ACCOUNT --addr %s/24 --tname all", netip_str);
+	RUN_CMD("iptables -I FORWARD 1 -p udp -j ACCOUNT --addr %s/24 --tname udp", netip_str);
+	RUN_CMD("iptables -I FORWARD 1 -p icmp -j ACCOUNT --addr %s/24 --tname icmp", netip_str);
+	RUN_CMD("iptables -I FORWARD 1 -p tcp --syn -j ACCOUNT --addr %s/24 --tname syn", netip_str);
 	return 0;
 }
 
@@ -254,15 +310,26 @@ void output_account_data()
 	fprintf(stderr,  "IP Address\tMAC Address\tRX_PKTS\tRX_BYTES\tTX_PKTS\tTX_BYTES\n");
 	
 	unsigned char * ip = (unsigned char * ) &net_ip;
+	
+	if (!enabled)
+	{
+		fprintf(fp, "off %d <br>\n", interval);
+		fclose(fp);
+		return;
+	} else 
+	{
+		fprintf(fp, "on %d <br>\n", interval);
+	}
+	
 	for (i=0; i<256; i++)
 	{
 		if (acc[i].has_data)
 		{
 			fprintf(fp, "%u.%u.%u.%u\t%s\t", ip[0], ip[1], ip[2], i, arp[i].mac);
-			fprintf(fp, "%d\t%d\t", acc[i].pkt_total,  acc[i].byte_total); 
-			fprintf(fp, "%d\t%d\t%d\t%d\t", spd[i].rx_pkt, spd[i].rx_byte,  spd[i].tx_pkt, spd[i].tx_byte); 
-			fprintf(fp, "%d\t%d\t%d\t%d\t", spd[i].rx_udp, spd[i].tx_udp,  spd[i].rx_icmp, spd[i].tx_icmp); 
-			fprintf(fp, "%d\t%d\t", spd[i].rx_syn, spd[i].tx_syn); 
+			fprintf(fp, "%u\t%u\t", acc[i].pkt_total,  acc[i].byte_total); 
+			fprintf(fp, "%u\t%u\t%u\t%u\t", spd[i].rx_pkt, spd[i].rx_byte,  spd[i].tx_pkt, spd[i].tx_byte); 
+			fprintf(fp, "%u\t%u\t%u\t%u\t", spd[i].rx_udp, spd[i].tx_udp,  spd[i].rx_icmp, spd[i].tx_icmp); 
+			fprintf(fp, "%u\t%u\t", spd[i].rx_syn, spd[i].tx_syn); 
 			
 			fprintf(stderr, "%u.%u.%u.%u\t%s\t", ip[0], ip[1], ip[2], i, arp[i].mac);
 			fprintf(stderr, "%d\t%d\t%d\t%d", spd[i].rx_pkt, spd[i].rx_byte,  spd[i].tx_pkt, spd[i].tx_byte); 							
@@ -307,21 +374,25 @@ static void receive_ubus_event(struct ubus_context *ctx, struct ubus_event_handl
 		{
 			enabled = false;	
 			memset(acc, 0, sizeof(acc));
+			save_config();
 		}
 	} else if (!strcmp(cmd, "start") )
 	{
 		if (enabled == false)
 		{
+			check_iptables();
 			refresh_account_data();
 			memset(acc, 0, sizeof(acc));
 			enabled = true;
 			pass_sec =0;
+			save_config();
 		}
 	} else if (!strcmp(cmd, "set_interval"))
 	{
 		const char * interval_str = json_get_string(obj, "interval");
 		interval = atoi(interval_str);
 		pass_sec = 0;
+		save_config();
 	}
 	
 	output_account_data();
@@ -368,27 +439,29 @@ void account_loop(void * p)
 
 static pthread_t ubus_thread;
 
+
 int main(int argc,  char * argv[])
 {
 	 if (signal(SIGTERM, sig_term) == SIG_ERR)
-        {
-                printf("can't install signal handler for SIGTERM\n");
-                exit(-1);
-        }
-        if (signal(SIGINT, sig_term) == SIG_ERR)
-        {
-                printf("can't install signal handler for SIGINT\n");
-                exit(-1);
-        }
-        if (signal(SIGQUIT, sig_term) == SIG_ERR)
-        {
-                printf("can't install signal handler for SIGQUIT\n");
-                exit(-1);
-        }
+  {
+      printf("can't install signal handler for SIGTERM\n");
+      exit(-1);
+  }
+  if (signal(SIGINT, sig_term) == SIG_ERR)
+  {
+      printf("can't install signal handler for SIGINT\n");
+      exit(-1);
+  }
+  if (signal(SIGQUIT, sig_term) == SIG_ERR)
+  {
+      printf("can't install signal handler for SIGQUIT\n");
+      exit(-1);
+  }
         
 	INIT_LOG("TMON");
 	system("ln -s /tmp/test.html   /www/test.html");
 	memset(&acc, 0, sizeof(acc));
+	load_config();
 	check_iptables();
 	if (ipt_ACCOUNT_init(&ctx))
 	{
