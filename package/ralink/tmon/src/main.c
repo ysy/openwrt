@@ -21,6 +21,7 @@
 #include <getopt.h>
 #include <signal.h>
 #include <stdio.h>
+#include <ctype.h>
 #include <arpa/inet.h>
 #include <linux/types.h>
 #include <pthread.h>
@@ -182,15 +183,13 @@ void clear_iptables_account()
 }
 
 int check_iptables()
-{
-	int ret = 0;	
+{	
 	char netip_str[20];
 		
 	system("uci get network.lan.ipaddr > /tmp/lan_ip_addr.txt");
 	get_string_from_file("/tmp/lan_ip_addr.txt", netip_str);
 	net_ip = inet_addr(netip_str);
 	
-
 	unsigned char * bytes = (unsigned char * ) &net_ip;
 	LOG("%u.%u.%u.%u", bytes[0], bytes[1], bytes[2], bytes[3]);
 	
@@ -240,7 +239,7 @@ void refresh_account_data()
 	{
 		LOG("Read failed: %s\n", ctx.error_str);
 		ipt_ACCOUNT_deinit(&ctx);
-		return EXIT_FAILURE;
+		return;
 	}
 
 	while ((entry = ipt_ACCOUNT_get_next_entry(&ctx)) != NULL)
@@ -261,7 +260,7 @@ void refresh_account_data()
 	{
 		LOG("Read failed: %s\n", ctx.error_str);
 		ipt_ACCOUNT_deinit(&ctx);
-		return EXIT_FAILURE;
+		return;
 	}
 
 	while ((entry = ipt_ACCOUNT_get_next_entry(&ctx)) != NULL)
@@ -276,7 +275,7 @@ void refresh_account_data()
 	{
 		LOG("Read failed: %s\n", ctx.error_str);
 		ipt_ACCOUNT_deinit(&ctx);
-		return EXIT_FAILURE;
+		return;
 	}
 
 	while ((entry = ipt_ACCOUNT_get_next_entry(&ctx)) != NULL)
@@ -291,7 +290,7 @@ void refresh_account_data()
 	{
 		LOG("Read failed: %s\n", ctx.error_str);
 		ipt_ACCOUNT_deinit(&ctx);
-		return EXIT_FAILURE;
+		return;
 	}
 
 	while ((entry = ipt_ACCOUNT_get_next_entry(&ctx)) != NULL)
@@ -326,7 +325,7 @@ void output_account_data()
 		if (acc[i].has_data)
 		{
 			fprintf(fp, "%u.%u.%u.%u\t%s\t", ip[0], ip[1], ip[2], i, arp[i].mac);
-			fprintf(fp, "%u\t%u\t", acc[i].pkt_total,  acc[i].byte_total); 
+			fprintf(fp, "%llu\t%llu\t", acc[i].pkt_total,  acc[i].byte_total); 
 			fprintf(fp, "%u\t%u\t%u\t%u\t", spd[i].rx_pkt, spd[i].rx_byte,  spd[i].tx_pkt, spd[i].tx_byte); 
 			fprintf(fp, "%u\t%u\t%u\t%u\t", spd[i].rx_udp, spd[i].tx_udp,  spd[i].rx_icmp, spd[i].tx_icmp); 
 			fprintf(fp, "%u\t%u\t", spd[i].rx_syn, spd[i].tx_syn); 
@@ -411,8 +410,9 @@ void * ubus_loop(void * p)
 	ubus_register_event_handler(ubus_ctx, &listener, "tmon.*");
 	
 	 uloop_init();
-        ubus_add_uloop(ubus_ctx);
-        uloop_run();
+	ubus_add_uloop(ubus_ctx);
+	uloop_run();
+	return NULL;
 }
 
 void account_loop(void * p)
@@ -434,7 +434,6 @@ void account_loop(void * p)
 		pthread_mutex_unlock(&lock);
 		sleep(1);
 	}
-	return 0;
 }
 
 static pthread_t ubus_thread;
