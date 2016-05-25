@@ -58,12 +58,18 @@ static char cmd[1024];
 		 
 void decide_iface()
 {
+	char proto[20];
 	memset(wan_iface, 0, sizeof(wan_iface));
 	memset(lan_iface, 0, sizeof(lan_iface));
 	system("uci get network.wan.ifname > /tmp/tbw_wanifname.txt");
 	get_string_from_file("/tmp/tbw_wanifname.txt", wan_iface);
+	system("uci get network.wan.proto > /tmp/tbw_wanifname.txt");
+	get_string_from_file("/tmp/tbw_wanifname.txt", proto);
+	if (!strncmp(proto, "ppp", 3) )
+	{
+		sprintf(wan_iface, "%s-wan", proto);
+	}
 	strcpy(lan_iface, "br-lan");
-	
 	LOG("WAN: %s, LAN: %s", wan_iface, lan_iface);
 }
 

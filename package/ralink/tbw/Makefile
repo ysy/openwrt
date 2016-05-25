@@ -44,6 +44,9 @@ define Package/tbw/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/tbw $(1)/usr/bin/
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/tbw.init $(1)/etc/init.d/tbw
+	
+	$(INSTALL_DIR) $(1)/etc/hotplug.d/iface
+	$(INSTALL_BIN) ./files/30-tbw  $(1)/etc/hotplug.d/iface/
 endef
 
 $(eval $(call BuildPackage,tbw))
