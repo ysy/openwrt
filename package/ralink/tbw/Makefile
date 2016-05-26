@@ -18,7 +18,7 @@ define Package/tbw
   SECTION:=MTK Properties
   CATEGORY:=MTK Properties
   TITLE:= Bandwith control
-  DEPENDS:= +libubox +libubus +libblobmsg-json +libpthread +tc +iptables-mod-iprange +iptables-mod-ipopt +iptables-mod-ipmark \
+  DEPENDS:= +tc +iptables-mod-iprange +iptables-mod-ipopt +iptables-mod-ipmark \
 	 +kmod-sched-core +kmod-sched-connmark +kmod-ifb +iptables +iptables-mod-conntrack-extra +iptables-mod-u32
 endef
 
@@ -30,7 +30,7 @@ endef
 define Build/Configure
 endef
 
-TARGET_LDFLAGS+=-lubox -ljson-c -lubus -lblobmsg_json -lpthread
+TARGET_LDFLAGS+=
 
 define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR) \
