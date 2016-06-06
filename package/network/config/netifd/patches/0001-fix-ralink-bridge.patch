@@ -1,0 +1,14 @@
+Index: netifd-2015-06-08/bridge.c
+===================================================================
+--- netifd-2015-06-08.orig/bridge.c	2016-04-14 07:31:56.000000000 +0800
++++ netifd-2015-06-08/bridge.c	2016-06-06 20:37:39.064143853 +0800
+@@ -438,6 +438,9 @@
+ bridge_add_member(struct bridge_state *bst, const char *name)
+ {
+ 	struct device *dev;
++	
++	if (!strcmp(name, "ra0") || !strcmp(name, "rai0"))
++		return;
+ 
+ 	dev = device_get(name, true);
+ 	if (!dev)
