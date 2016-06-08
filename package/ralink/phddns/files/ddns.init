@@ -1,0 +1,36 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2007 OpenWrt.org
+
+START=99
+USE_PROCD=1
+PROG=/usr/bin/phddns
+
+start_service() {
+	EN=`uci get ddns.server.enabled`
+	rm -f /tmp/ddns_status
+	rm -f /tmp/ddns_domains	
+	[ $EN = '1' ] || exit 0
+
+	HOST=`uci get ddns.server.host`
+	USER=`uci get ddns.server.user`
+	PASS=`uci get ddns.server.pass`
+	
+	echo "[settings]" > /tmp/phddns.conf
+	echo "szHost = $HOST" >> /tmp/phddns.conf
+	echo "szUserID = $USER" >> /tmp/phddns.conf 
+	echo "szUserPWD = $PASS" >> /tmp/phddns.conf 
+	echo "nicName = eth0" >>/tmp/phddns.conf
+	echo "szLog = /var/log/phddns.log" >> /tmp/phddns.conf
+
+	procd_open_instance
+	procd_set_param command "$PROG" -c /tmp/phddns.conf 
+	procd_set_param respawn 
+	procd_close_instance
+}
+
+#stop_service()
+#{
+	#killall phddns
+	#rm -f /tmp/ddns_status
+	#rm -f /tmp/ddns_domains
+#}
