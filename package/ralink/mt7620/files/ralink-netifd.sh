@@ -70,21 +70,46 @@ ralink_chk8021x() {
 }
 
 ralink_init_device_config() {
-	config_add_string type vendor band country txpower
+	config_add_string type vendor band country txpower 
 	config_add_int channel autoch radio beacon dtim
 }
 
 ralink_init_iface_config() {
-	config_add_string ifname
+	config_add_string ifname macfilter
+	config_add_array maclist
 }
 
 ralink_setup_vif() {
 	json_select config
-	json_get_vars ifname mode ssid encryption
+	json_get_vars ifname mode ssid encryption macfilter
 
 	json_get_values network_list network
-	echo "ifname: $ifname network: $network_list" >> /tmp/wifi.log
+	json_get_values maclist_list maclist
+	echo "ifname: $ifname network: $network_list maclist: $maclist_list" >> /tmp/wifi.log
+	echo "macfilter: $macfilter type: $type" >> /tmp/wifi.log
 	echo "ifconfig $ifname down" >> /tmp/wifi.log
+	maclist="${maclist_list// /;};"	
+	echo "maclist: $maclist" >> /tmp/wifi.log
+	macpolicy=0	
+	case "$macfilter" in
+        allow|2)
+        	macpolicy=1;
+        ;;
+        deny|1)
+        	macpolicy=2;
+        ;;
+        *|disable|none|0)
+        	macpolicy=0;
+        ;;
+    	esac
+
+	[ $macpolicy = 0 ] || 
+	{
+		echo "macfilter enabled" >> /tmp/wifi.log
+		sed -i   s/AccessPolicy0=0/AccessPolicy0=$macpolicy/    "/tmp/${type}.dat"
+		sed -i   s/AccessControlList0=/AccessControlList0=$maclist/ "/tmp/${type}.dat"
+	}
+	
 	ifconfig $ifname down
 	sleep 1
 	ifconfig $ifname up
