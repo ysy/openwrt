@@ -1,0 +1,15 @@
+#!/bin/sh
+
+. /lib/functions.sh
+. /lib/functions/leds.sh
+
+
+if [ "${ACTION}" = "pressed" ]; then
+	echo "RUN TRESET" > /dev/console
+	/usr/bin/treset  & 
+fi
+
+if [ "${ACTION}" = "released" ]; then
+	killall treset
+	echo "KILL TRESET " > /dev/console
+fi

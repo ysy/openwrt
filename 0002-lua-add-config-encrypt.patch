@@ -1,0 +1,27 @@
+From d70e103b2cd2b47ce1d7a26dfd0bcb01981a9992 Mon Sep 17 00:00:00 2001
+From: YuanSuyi <nbysy@qq.com>
+Date: Wed, 8 Jun 2016 10:50:13 +0800
+Subject: [PATCH] config encrypt
+
+---
+ .../luasrc/controller/admin/system.lua             |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/modules/luci-mod-admin-full/luasrc/controller/admin/system.lua b/modules/luci-mod-admin-full/luasrc/controller/admin/system.lua
+index 4feab28..7d1cc0e 100644
+--- a/modules/luci-mod-admin-full/luasrc/controller/admin/system.lua
++++ b/modules/luci-mod-admin-full/luasrc/controller/admin/system.lua
+@@ -173,8 +173,8 @@ function action_flashops()
+ 	local upgrade_avail = fs.access("/lib/upgrade/platform.sh")
+ 	local reset_avail   = os.execute([[grep -E '"rootfs_data"|"ubi"' /proc/mtd >/dev/null 2>&1]]) == 0
+ 
+-	local restore_cmd = "tar -xzC/ >/dev/null 2>&1"
+-	local backup_cmd  = "sysupgrade --create-backup - 2>/dev/null"
++	local restore_cmd = "tenc | tar -xzC/ >/dev/null 2>&1"
++	local backup_cmd  = "sysupgrade --create-backup - 2>/dev/null | tenc"
+ 	local image_tmp   = "/tmp/firmware.img"
+ 
+ 	local function image_supported()
+-- 
+1.7.9.5
+

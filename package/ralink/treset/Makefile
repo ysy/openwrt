@@ -7,19 +7,19 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=tbw
+PKG_NAME:=treset
 PKG_RELEASE:=1
 
 PKG_BUILD_DIR := $(BUILD_DIR)/$(PKG_NAME)
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/tbw
+define Package/treset
   SECTION:=MTK Properties
   CATEGORY:=MTK Properties
-  TITLE:= Bandwith control
-  DEPENDS:= +tc +iptables-mod-iprange +iptables-mod-ipopt +iptables-mod-ipmark \
-	 +kmod-sched-core +kmod-sched-connmark +kmod-ifb +iptables +iptables-mod-conntrack-extra +iptables-mod-u32
+  TITLE:= Factory Reset
+  DEPENDS:=
+
 endef
 
 define Build/Prepare
@@ -30,7 +30,6 @@ endef
 define Build/Configure
 endef
 
-TARGET_LDFLAGS+=
 
 define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR) \
@@ -39,14 +38,11 @@ define Build/Compile
 		LDFLAGS="$(TARGET_LDFLAGS)"
 endef
 
-define Package/tbw/install
+define Package/treset/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/tbw $(1)/usr/bin/
-	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./files/tbw.init $(1)/etc/init.d/tbw
-	
-	$(INSTALL_DIR) $(1)/etc/hotplug.d/iface
-	$(INSTALL_BIN) ./files/30-tbw  $(1)/etc/hotplug.d/iface/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/treset $(1)/usr/bin/
+	$(INSTALL_DIR) $(1)/etc/rc.button
+	$(INSTALL_BIN) ./files/BTN_0 $(1)/etc/rc.button/
 endef
 
-$(eval $(call BuildPackage,tbw))
+$(eval $(call BuildPackage,treset))

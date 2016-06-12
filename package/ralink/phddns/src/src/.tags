@@ -1,0 +1,260 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ASCII	base64.c	48;"	d	file:
+BOOL	phsocket.h	22;"	d
+BUFFER_TOO_SMALL	blowfish.h	16;"	d
+BUFSIZE	log.c	13;"	d	file:
+Base64	base64.c	/^static const char Base64[] =$/;"	v	file:
+BeginKeepAlive	phupdate.c	/^BOOL BeginKeepAlive(PHGlobal *phglobal)$/;"	f
+BindNic	phruncall.c	/^void BindNic(  PHGlobal *pglobal,PH_parameter *parameter )$/;"	f
+Blowfish_DeCode	blowfish.c	/^int Blowfish_DeCode(blf_ctx *c,const char* src,char* dest,unsigned int len)$/;"	f
+Blowfish_EnCode	blowfish.c	/^int Blowfish_EnCode(blf_ctx *c,const char* src,char* dest,unsigned int len)$/;"	f
+Blowfish_decipher	blowfish.c	/^void Blowfish_decipher(blf_ctx *c,unsigned int * xl, unsigned int *xr)$/;"	f
+Blowfish_encipher	blowfish.c	/^void Blowfish_encipher(blf_ctx *c,unsigned int *xl,unsigned int *xr)$/;"	f
+CALLBACK_OnAccountDomainInfo	phglobal.h	/^	typedef void (*CALLBACK_OnAccountDomainInfo)(char *domainInfo, int length); $/;"	t
+CALLBACK_OnDomainRegistered	phglobal.h	/^	typedef void (*CALLBACK_OnDomainRegistered)(char *domainName); $/;"	t
+CALLBACK_OnStatusChanged	phglobal.h	/^	typedef void (*CALLBACK_OnStatusChanged)(int status, int data); $/;"	t
+CALLBACK_OnUserInfo	phglobal.h	/^	typedef void (*CALLBACK_OnUserInfo)(char *userInfo, int length); $/;"	t
+CODE_SUCCESS	blowfish.h	13;"	d
+COMMAND_AUTH	phglobal.h	68;"	d
+COMMAND_CNFM	phglobal.h	70;"	d
+COMMAND_QUIT	phglobal.h	73;"	d
+COMMAND_REGI	phglobal.h	69;"	d
+COMMAND_STAT_DOM	phglobal.h	72;"	d
+COMMAND_STAT_USER	phglobal.h	71;"	d
+DATA_KEEPALIVE	phglobal.h	/^}DATA_KEEPALIVE;$/;"	t	typeref:struct:__anon4
+DATA_KEEPALIVE_EXT	phglobal.h	/^}DATA_KEEPALIVE_EXT;$/;"	t	typeref:struct:__anon5
+DEFAULT_KEY	blowfish.h	32;"	d
+Decode	md5.c	/^	static void Decode (unsigned int *output, unsigned char *input, unsigned int len)$/;"	f	file:
+DestroySockets	phupdate.c	/^BOOL DestroySockets(PHGlobal *phglobal)$/;"	f
+ENCODE_ERROR	blowfish.h	15;"	d
+Encode	md5.c	/^	static void Encode (unsigned char *output, unsigned int *input, unsigned int len)$/;"	f	file:
+ExecuteUpdate	phupdate.c	/^int ExecuteUpdate(PHGlobal *phglobal)$/;"	f
+F	md5.h	66;"	d
+F1	blowfish.c	/^unsigned int F1(blf_ctx* bc,unsigned int x)$/;"	f
+FALSE	phsocket.h	30;"	d
+FF	md5.h	74;"	d
+G	md5.h	67;"	d
+GG	md5.h	75;"	d
+GenerateCrypt	generate.c	/^int GenerateCrypt(char *szUser, $/;"	f
+GetValue	phruncall.c	/^int GetValue(char* root,char* attribute,char* value,PHGlobal *pglobal,PH_parameter *parameter)$/;"	f
+H	md5.h	68;"	d
+HH	md5.h	76;"	d
+HelpPrint	phruncall.c	/^void HelpPrint()$/;"	f
+I	md5.h	69;"	d
+II	md5.h	77;"	d
+INVALID_SOCKET	phglobal.h	29;"	d
+INVALID_SOCKET	phsocket.c	9;"	d	file:
+ISSPACE	phruncall.c	16;"	d	file:
+InDaemon	phruncall.c	/^int InDaemon(void)$/;"	f
+InitBlowfish	blowfish.c	/^void InitBlowfish(blf_ctx *c, const unsigned char* keybuf,unsigned int len)$/;"	f
+InitIni	phruncall.c	/^int InitIni( PHGlobal *pglobal,PH_parameter *parameter )$/;"	f
+InitializeSockets	phupdate.c	/^BOOL InitializeSockets(PHGlobal *phglobal)$/;"	f
+KEEPALIVE_PACKET_LEN	phglobal.h	86;"	d
+KeyMD5Encode	md5.c	/^unsigned int KeyMD5Encode(unsigned char* szEncoded, const unsigned char* szData, unsigned int nSize, unsigned char* szKey, unsigned int nKeyLen)$/;"	f
+LENGTH_ILLEGAL	blowfish.h	14;"	d
+LOG	log.h	7;"	d
+Listen	phsocket.c	/^BOOL Listen(int m_hSocket, int nConnectionBacklog\/*=5*\/)$/;"	f
+LoadFile	phruncall.c	/^int LoadFile(PHGlobal *global,PH_parameter *parameter)$/;"	f
+MAXKEYBYTES	blowfish.h	30;"	d
+MAXMD5SOURCESTRINGLEN	md5.c	199;"	d	file:
+MAX_PATH	phglobal.h	30;"	d
+MAX_TCP_PACKET_LEN	phglobal.h	35;"	d
+MD5Final	md5.c	/^void MD5Final (unsigned char* digest, MD5_CTX *context)$/;"	f
+MD5Init	md5.c	/^void MD5Init(MD5_CTX *context)                                         \/* context *\/$/;"	f
+MD5Transform	md5.c	/^static void MD5Transform (unsigned int state[4], unsigned char block[64])$/;"	f	file:
+MD5Update	md5.c	/^void MD5Update (MD5_CTX *context, unsigned char *input, unsigned int inputLen)$/;"	f
+MD5_CTX	md5.h	/^} MD5_CTX;$/;"	t	typeref:struct:__anon2
+MD5_memcpy	md5.c	/^	static void MD5_memcpy (unsigned char * output, unsigned char * input, unsigned int len)$/;"	f	file:
+MD5_memset	md5.c	/^static void MD5_memset (unsigned char * output, int value, unsigned int len)$/;"	f	file:
+MDFinal	md5.h	50;"	d
+MDInit	md5.h	48;"	d
+MDString	md5.c	/^int MDString (unsigned char* string, unsigned int nLen, unsigned char* digest)$/;"	f
+MDUpdate	md5.h	49;"	d
+MD_CTX	md5.h	47;"	d
+MY_RET_CODE_	blowfish.h	11;"	d
+MessageCodes	phglobal.h	/^enum MessageCodes$/;"	g
+MyReadFile	phruncall.c	/^int MyReadFile(char* filename,PHGlobal *pglobal,PH_parameter *parameter)$/;"	f
+MyWriteFile	phruncall.c	/^int MyWriteFile(char *filename,PHGlobal *pglobal,PH_parameter *parameter)$/;"	f
+NULL	phsocket.h	34;"	d
+NewFile	phruncall.c	/^void NewFile(PH_parameter *parameter)$/;"	f
+NewHost	phruncall.c	/^void NewHost(PHGlobal *pglobal)$/;"	f
+NewIni	phruncall.c	/^int NewIni(char* save_file,PHGlobal *global,PH_parameter *parameter)$/;"	f
+NewUserID	phruncall.c	/^void NewUserID(PHGlobal *pglobal)$/;"	f
+NewUserPWD	phruncall.c	/^void NewUserPWD(PHGlobal *pglobal)$/;"	f
+NewnicName	phruncall.c	/^void NewnicName(PHGlobal *pglobal,PH_parameter *parameter)$/;"	f
+P	blowfish.h	/^	unsigned int S[4][256],P[18];$/;"	m	struct:__anon1
+PADDING	md5.h	/^static unsigned char PADDING[64] = {$/;"	v
+PADLEN	md5.c	198;"	d	file:
+PHGlobal	phglobal.h	/^} PHGlobal;$/;"	t	typeref:struct:__anon6
+PH_parameter	phruncall.h	/^}PH_parameter;$/;"	t	typeref:struct:__anon3
+Pad64	base64.c	/^static const char Pad64 = '=';$/;"	v	file:
+ParameterAnalysis	phruncall.c	/^int ParameterAnalysis(int argc,char *argv[],PHGlobal *pglobal,PH_parameter *parameter)$/;"	f
+ROTATE_LEFT	md5.h	71;"	d
+ROUNDCOUNT	blowfish.h	31;"	d
+RecvKeepaliveResponse	phupdate.c	/^int RecvKeepaliveResponse(PHGlobal *phglobal)$/;"	f
+S	blowfish.h	/^	unsigned int S[4][256],P[18];$/;"	m	struct:__anon1
+S11	md5.h	30;"	d
+S12	md5.h	31;"	d
+S13	md5.h	32;"	d
+S14	md5.h	33;"	d
+S21	md5.h	34;"	d
+S22	md5.h	35;"	d
+S23	md5.h	36;"	d
+S24	md5.h	37;"	d
+S31	md5.h	38;"	d
+S32	md5.h	39;"	d
+S33	md5.h	40;"	d
+S34	md5.h	41;"	d
+S41	md5.h	42;"	d
+S42	md5.h	43;"	d
+S43	md5.h	44;"	d
+S44	md5.h	45;"	d
+SaveFile	phruncall.c	/^int SaveFile(char* save_file,PHGlobal *pglobal,PH_parameter *parameter)$/;"	f
+SendKeepAlive	phupdate.c	/^BOOL SendKeepAlive(PHGlobal *phglobal, int opCode)$/;"	f
+SetValue	phruncall.c	/^void SetValue(char* root,char* attribute,char* value,PHGlobal *pglobal,PH_parameter *parameter )$/;"	f
+ShowNic	phruncall.c	/^void ShowNic( PHGlobal *pglobal,PH_parameter *parameter )$/;"	f
+TRUE	phsocket.h	26;"	d
+UDP_OPCODE_LOGOUT	phglobal.h	83;"	d
+UDP_OPCODE_UPDATE_ERROR	phglobal.h	80;"	d
+UDP_OPCODE_UPDATE_OK	phglobal.h	78;"	d
+UDP_OPCODE_UPDATE_VER2	phglobal.h	76;"	d
+_CUPDATECORE_H	phupdate.h	11;"	d
+_LOG_H	log.h	3;"	d
+_LUTIL_H	lutil.h	12;"	d
+__BLOWFISH__H__	blowfish.h	4;"	d
+__GENERATE_H_ZHY_0505241025__	generate.h	2;"	d
+__PHGLOBAL__H__	phglobal.h	11;"	d
+__PHSOCKET__H__	phsocket.h	2;"	d
+bAppointIni	phruncall.h	/^	BOOL bAppointIni;$/;"	m	struct:__anon3
+bDaemon	phruncall.h	/^	BOOL bDaemon;$/;"	m	struct:__anon3
+bFirstRun	phruncall.h	/^	BOOL bFirstRun;$/;"	m	struct:__anon3
+bNeed_connect	phglobal.h	/^	BOOL bNeed_connect;$/;"	m	struct:__anon6
+bNewIni	phruncall.h	/^	BOOL bNewIni;$/;"	m	struct:__anon3
+bTcpUpdateSuccessed	phglobal.h	/^	BOOL bTcpUpdateSuccessed;$/;"	m	struct:__anon6
+bUser	phruncall.h	/^	BOOL bUser;$/;"	m	struct:__anon3
+blf_ctx	blowfish.h	/^}blf_ctx;$/;"	t	typeref:struct:__anon1
+blf_dec	blowfish.c	/^void blf_dec(blf_ctx *c,unsigned int *data,int blocks){$/;"	f
+blf_enc	blowfish.c	/^void blf_enc(blf_ctx *c,unsigned int *data,int blocks){$/;"	f
+buffer	md5.h	/^  unsigned char buffer[64];                         \/* input buffer *\/$/;"	m	struct:__anon2
+cLastResult	phglobal.h	/^	int cLastResult;$/;"	m	struct:__anon6
+cbOnAccountDomainInfo	phglobal.h	/^	CALLBACK_OnAccountDomainInfo cbOnAccountDomainInfo;$/;"	m	struct:__anon6
+cbOnDomainRegistered	phglobal.h	/^	CALLBACK_OnDomainRegistered cbOnDomainRegistered;$/;"	m	struct:__anon6
+cbOnStatusChanged	phglobal.h	/^	CALLBACK_OnStatusChanged cbOnStatusChanged;$/;"	m	struct:__anon6
+cbOnUserInfo	phglobal.h	/^	CALLBACK_OnUserInfo cbOnUserInfo;$/;"	m	struct:__anon6
+challengekey	phglobal.h	/^	int challengekey;$/;"	m	struct:__anon6
+checkparameter	phruncall.c	/^int checkparameter(int argc,char** argv,PHGlobal *pglobal,PH_parameter *parameter)$/;"	f
+clientinfo	phglobal.h	/^	int clientinfo;$/;"	m	struct:__anon6
+closesocket	phsocket.c	10;"	d	file:
+convert_status_code	phglobal.c	/^const char *convert_status_code(int nCode)$/;"	f
+count	md5.h	/^  unsigned int count[2];        \/* number of bits, modulo 2^64 (lsb first) *\/$/;"	m	struct:__anon2
+create_pidfile	main.c	/^static void create_pidfile()$/;"	f	file:
+defOnAccountDomainInfo	phglobal.c	/^static void defOnAccountDomainInfo(char *domainInfo, int len)$/;"	f	file:
+defOnDomainRegistered	phglobal.c	/^static void defOnDomainRegistered(char *domain)$/;"	f	file:
+defOnStatusChanged	phglobal.c	/^static void defOnStatusChanged(int status, int data)$/;"	f	file:
+defOnUserInfo	phglobal.c	/^static void defOnUserInfo(char *userInfo, int len)$/;"	f	file:
+errorAuthBusy	phglobal.h	/^	errorAuthBusy,$/;"	e	enum:MessageCodes
+errorAuthFailed	phglobal.h	/^	errorAuthFailed,$/;"	e	enum:MessageCodes
+errorConnectFailed	phglobal.h	/^	errorConnectFailed = 0x100,$/;"	e	enum:MessageCodes
+errorDomainListFailed	phglobal.h	/^	errorDomainListFailed,$/;"	e	enum:MessageCodes
+errorDomainRegisterFailed	phglobal.h	/^	errorDomainRegisterFailed,$/;"	e	enum:MessageCodes
+errorKeepAliveError	phglobal.h	/^	errorKeepAliveError,$/;"	e	enum:MessageCodes
+errorOccupyReconnect	phglobal.h	/^	errorOccupyReconnect,$/;"	e	enum:MessageCodes
+errorRetrying	phglobal.h	/^	errorRetrying,$/;"	e	enum:MessageCodes
+errorSocketInitialFailed	phglobal.h	/^	errorSocketInitialFailed,$/;"	e	enum:MessageCodes
+errorStatDetailInfoFailed	phglobal.h	/^	errorStatDetailInfoFailed,$/;"	e	enum:MessageCodes
+errorUpdateTimeout	phglobal.h	/^	errorUpdateTimeout,$/;"	e	enum:MessageCodes
+getSocketError	phsocket.c	/^inline int getSocketError()$/;"	f
+getch_c	phruncall.c	/^int getch_c (void){$/;"	f
+global	main.c	/^PHGlobal global;$/;"	v
+init_global	phglobal.c	/^void init_global(PHGlobal *global)$/;"	f
+init_parameter	phruncall.c	/^int init_parameter(PH_parameter *parameter)$/;"	f
+ioctlsocket	phsocket.c	11;"	d	file:
+ip	phglobal.h	/^	int ip;$/;"	m	struct:__anon5
+ip	phglobal.h	/^	int ip;$/;"	m	struct:__anon6
+keepalive	phglobal.h	/^	DATA_KEEPALIVE keepalive;$/;"	m	struct:__anon5
+lChatID	phglobal.h	/^	int lChatID;$/;"	m	struct:__anon4
+lID	phglobal.h	/^	int lID;$/;"	m	struct:__anon4
+lOpCode	phglobal.h	/^	int lOpCode;$/;"	m	struct:__anon4
+lReserved	phglobal.h	/^	int lReserved;$/;"	m	struct:__anon4
+lSum	phglobal.h	/^	int lSum;$/;"	m	struct:__anon4
+lasttcptime	phglobal.h	/^	int lasttcptime;$/;"	m	struct:__anon6
+logFile	log.c	/^FILE *logFile = NULL;$/;"	v
+logLevel	log.c	/^int logLevel = 20;$/;"	v
+logLevel	log.h	/^int logLevel;$/;"	v
+logTime	log.c	/^const char *logTime()$/;"	f
+log_close	log.c	/^void log_close()$/;"	f
+log_open	log.c	/^void log_open(const char *file, int level)$/;"	f
+log_print	log.c	/^void log_print(const char *fmt, ...)$/;"	f
+logfile	phruncall.h	/^	char logfile[1024];$/;"	m	struct:__anon3
+lutil_b64_ntop	base64.c	/^int lutil_b64_ntop($/;"	f
+lutil_b64_pton	base64.c	/^int lutil_b64_pton($/;"	f
+m_tcpsocket	phglobal.h	/^	int m_tcpsocket,m_udpsocket;$/;"	m	struct:__anon6
+m_udpsocket	phglobal.h	/^	int m_tcpsocket,m_udpsocket;$/;"	m	struct:__anon6
+main	main.c	/^int main(int argc, char *argv[])$/;"	f
+myOnAccountDomainInfo	main.c	/^static void myOnAccountDomainInfo(char *domainInfo, int len)$/;"	f	file:
+myOnDomainRegistered	main.c	/^static void myOnDomainRegistered(char *domain)$/;"	f	file:
+myOnStatusChanged	main.c	/^static void myOnStatusChanged(int status, long data)$/;"	f	file:
+myOnUserInfo	main.c	/^static void myOnUserInfo(char *userInfo, int len)$/;"	f	file:
+my_handleSIG	main.c	/^static void my_handleSIG (int sig)$/;"	f	file:
+my_inet_ntoa	phglobal.c	/^const char *my_inet_ntoa(int ip)$/;"	f
+nAddressIndex	phglobal.h	/^	int nAddressIndex;$/;"	m	struct:__anon6
+nChallengeLen	phglobal.h	/^	int nChallengeLen;$/;"	m	struct:__anon6
+nChatID	phglobal.h	/^	int nChatID,nStartID,nLastResponseID;$/;"	m	struct:__anon6
+nLastResponseID	phglobal.h	/^	int nChatID,nStartID,nLastResponseID;$/;"	m	struct:__anon6
+nPort	phglobal.h	/^	short nPort;$/;"	m	struct:__anon6
+nStartID	phglobal.h	/^	int nChatID,nStartID,nLastResponseID;$/;"	m	struct:__anon6
+nUserType	phglobal.h	/^	int nUserType;$/;"	m	struct:__anon6
+nicName	phruncall.h	/^	char nicName[255];$/;"	m	struct:__anon3
+nicNumber	phruncall.h	/^	int  nicNumber;$/;"	m	struct:__anon3
+okAuthpassed	phglobal.h	/^	okAuthpassed,$/;"	e	enum:MessageCodes
+okConnected	phglobal.h	/^	okConnected = 0,$/;"	e	enum:MessageCodes
+okConnecting	phglobal.h	/^	okConnecting,$/;"	e	enum:MessageCodes
+okDomainListed	phglobal.h	/^	okDomainListed,$/;"	e	enum:MessageCodes
+okDomainsRegistered	phglobal.h	/^	okDomainsRegistered,$/;"	e	enum:MessageCodes
+okKeepAliveRecved	phglobal.h	/^	okKeepAliveRecved,$/;"	e	enum:MessageCodes
+okNoData	phglobal.h	/^	okNoData,$/;"	e	enum:MessageCodes
+okNormal	phglobal.h	/^	okNormal = 0x120,$/;"	e	enum:MessageCodes
+okRedirecting	phglobal.h	/^	okRedirecting,$/;"	e	enum:MessageCodes
+okRetrievingMisc	phglobal.h	/^	okRetrievingMisc,$/;"	e	enum:MessageCodes
+okServerER	phglobal.h	/^	okServerER,$/;"	e	enum:MessageCodes
+parameter	main.c	/^PH_parameter parameter;$/;"	v
+phAccept	phsocket.c	/^BOOL phAccept(int m_hSocket, int *rSocket, struct sockaddr_in *lpsockaddr_in, int* lpsockaddr_inLen)$/;"	f
+phBind	phsocket.c	/^BOOL phBind(int m_hSocket, unsigned short nSocketPort, char * lpszSocketAddress)$/;"	f
+phClose	phsocket.c	/^void phClose(int *m_hSocket)$/;"	f
+phConnect	phsocket.c	/^BOOL phConnect(int m_hSocket, char * lpszHostAddress, unsigned short nHostPort, int *nAddressIndex, char *szSelectedAddress)$/;"	f
+phCreate	phsocket.c	/^BOOL phCreate(int *m_hSocket, unsigned short nSocketPort, int nSocketType, char * lpszSocketAddress)$/;"	f
+phDataReadable	phsocket.c	/^int phDataReadable(int m_hSocket, int nTimeout)$/;"	f
+phReadOneLine	phsocket.c	/^int phReadOneLine(int m_hSocket, char * lpszBuf, int nBufLen)$/;"	f
+phReceive	phsocket.c	/^int phReceive(int m_hSocket, void* lpBuf, int nBufLen, int nFlag)$/;"	f
+phReceiveFrom	phsocket.c	/^int phReceiveFrom(int m_hSocket, void* lpBuf, int nBufLen, char *rSocketAddress, unsigned short *rSocketPort, int nFlags)$/;"	f
+phSend	phsocket.c	/^int phSend(int m_hSocket, void* lpBuf, int nBufLen, int nFlag)$/;"	f
+phSendTo	phsocket.c	/^int phSendTo(int m_hSocket, const void* lpBuf, int nBufLen, unsigned short nHostPort, char * lpszHostAddress, int nFlags)$/;"	f
+phSetBlockingMode	phsocket.c	/^void phSetBlockingMode(int m_hSocket, BOOL bBlocking)$/;"	f
+phddns_step	phupdate.c	/^int phddns_step(PHGlobal *phglobal)$/;"	f
+phddns_stop	phupdate.c	/^void phddns_stop(PHGlobal *phglobal)$/;"	f
+phrawConnect	phsocket.c	/^BOOL phrawConnect(int m_hSocket, struct sockaddr_in* psockaddr_in, int nsockaddr_inLen)$/;"	f
+phrawReceiveFrom	phsocket.c	/^int phrawReceiveFrom(int m_hSocket, void* lpBuf, int nBufLen, struct sockaddr_in* psockaddr_in, int* pnsockaddr_inLen, int nFlags)$/;"	f
+phrawSendTo	phsocket.c	/^int phrawSendTo(int m_hSocket, const void* lpBuf, int nBufLen, struct sockaddr_in* psockaddr_in, int nsockaddr_inLen, int nFlags)$/;"	f
+set_default_callback	phglobal.c	/^void set_default_callback(PHGlobal *global)$/;"	f
+sleep	phglobal.h	27;"	d
+snprintf	log.c	16;"	d	file:
+socklen_t	phsocket.c	6;"	d	file:
+state	md5.h	/^  unsigned int state[4];                                   \/* state (ABCD) *\/$/;"	m	struct:__anon2
+szActiveDomains	phglobal.h	/^	char szActiveDomains[255][255];$/;"	m	struct:__anon6
+szBindAddress	phglobal.h	/^	char szBindAddress[256];$/;"	m	struct:__anon6
+szChallenge	phglobal.h	/^	char szChallenge[256];$/;"	m	struct:__anon6
+szHost	phglobal.h	/^	char szHost[256];$/;"	m	struct:__anon6
+szTcpConnectAddress	phglobal.h	/^	char szTcpConnectAddress[32];$/;"	m	struct:__anon6
+szUserID	phglobal.h	/^	char szUserID[256];$/;"	m	struct:__anon6
+szUserPWD	phglobal.h	/^	char szUserPWD[256];$/;"	m	struct:__anon6
+szconfig	phruncall.h	/^	char szconfig[255];$/;"	m	struct:__anon3
+szuserName	phruncall.h	/^	char szuserName[255];$/;"	m	struct:__anon3
+tmLastResponse	phglobal.h	/^	int tmLastResponse;$/;"	m	struct:__anon6
+tmLastSend	phglobal.h	/^	int tmLastSend;$/;"	m	struct:__anon6
+trim	phruncall.c	/^char *trim(char *string) $/;"	f
+uptime	phglobal.h	/^	int uptime;$/;"	m	struct:__anon6

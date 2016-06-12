@@ -1,0 +1,2 @@
+#!/bin/sh
+[ "$ACTION" = ifup ] && /usr/bin/tbw 
