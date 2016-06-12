@@ -14,7 +14,7 @@ int main(int argc,  char * argv[])
 	int in_fd = fileno(stdin);
 	int out_fd = fileno(stdout);
 
-	ret = system("uci get system.config_encrypt.enabled | grep 1");
+	ret = system("uci get system.config_encrypt.enabled | grep 1 > /dev/null");
 	if (ret == 0 ) 
 		enc_en = 1;
 
