@@ -1,0 +1,144 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2015 OpenWrt.org
+
+START=60
+USE_PROCD=1
+
+BIN=/usr/sbin/pptpd
+CONFIG=/var/etc/pptpd.conf
+OPTIONS=/var/etc/options.pptpd
+CHAP_SECRETS=/var/etc/chap-secrets
+
+validate_login_section() {
+	uci_validate_section pptpd login "${1}" \
+		'username:string' \
+		'password:string'
+}
+
+validate_pptpd_section() {
+	uci_validate_section pptpd service "${1}" \
+		'enabled:uinteger' \
+		'localip:string' \
+		'remoteip:string' \
+		'internet:uinteger' \
+		'local_visit:uinteger' \
+		'mtu:uinteger' \
+		'mru:uinteger' \
+		'encrypt:uinteger' \
+		'debug:uinteger' \
+		'pap:uinteger' \
+		'eap:uinteger' \
+		'ms_chap:uinteger' \
+		'ms_chapv2:uinteger' \
+		'disable_lan:uinteger' \
+		'idle:uinteger'  \
+		'lcp_interval:uinteger' \
+		'lcp_fail_count:uinteger' 
+}
+
+setup_login() {
+	validate_login_section "${1}" || {
+		echo "validation failed"
+		return 1
+	}
+
+	[ -n "${username}" ] || return 0
+	[ -n "${password}" ] || return 0
+
+	echo "${username} pptp-server ${password} *" >> $CHAP_SECRETS
+}
+
+setup_firewall() {
+	uci del firewall.pptpvpn_zone
+	uci del firewall.pptpvpn_wan_forward
+	uci del firewall.pptpvpn_disable_lan_rule
+	uci commit
+	local forward="REJECT"
+	
+	[ "$local_visit" -eq 1 ] && forward="ACCEPT"	
+	cat <<EOF >>/etc/config/firewall
+config zone pptpvpn_zone
+	option name             pptpvpn
+	option input            ACCEPT
+	option output           ACCEPT
+	option forward          $forward
+	list subnet             '$localip/24'
+
+EOF
+	
+	if [ "$internet" -eq 1 ] ; then
+		cat <<EOF >>/etc/config/firewall
+config forwarding pptpvpn_wan_forward    
+	option src              pptpvpn
+	option dest             wan 
+
+EOF
+
+	fi	
+
+	if [ "$disable_lan" -eq 1 ]; then
+	cat <<EOF >> /etc/config/firewall
+config rule pptpvpn_disable_lan_rule
+	option src              lan  
+	option dest_port        1723
+	option proto    tcp                     
+	option target   REJECT
+
+EOF
+	fi		
+	/etc/init.d/firewall restart
+}
+
+setup_config() {
+	validate_pptpd_section "${1}" || {
+		echo "validation failed"
+		return 1
+	}
+
+	[ "$enabled" -eq 0 ] && return 1
+
+	mkdir -p /var/etc
+	cp /etc/pptpd.conf $CONFIG
+
+	local enc_str=""
+	[ -n "$localip" ] && echo "localip  $localip" >> $CONFIG
+	[ -n "$remoteip" ] && echo "remoteip  $remoteip" >> $CONFIG
+	[ "$idle" -gt 0 ] && echo "idle $idle" >> $CONFIG
+	echo "require-pap" >> $CONFIG
+	[ "$pap" -eq 0 ] &&  enc_str="$enc_str\nrefuse_pap"
+	[ "$eap" -eq 0 ] &&  enc_str="$enc_str\nrefuse_eap"
+	[ "$ms_chap" -eq 0 ] && enc_str="$enc_str\nrefuse-mschap"
+	[ "$ms_chapv2" -eq 0 ] && enc_str="$enc_str\nrefuse-mschap-v2"
+	[ "$debug" -eq 1 ] && debug_str="debug"	
+	[ "$encrypt" -eq 1 ] && enc_str="$enc_str\nmppe required,no40,no56,stateless"	
+	enc_str=`echo -e $enc_str`	
+	cat <<EOF > $OPTIONS
+$debug_str
+auth
+name "pptp-server"
+lcp-echo-failure $lcp_fail_count
+lcp-echo-interval $lcp_interval
+default-asyncmap
+mtu $mtu
+mru $mru
+nobsdcomp
+nodeflate
+$enc_str
+#proxyarp
+EOF
+	ln -s $OPTIONS /etc/ppp/options.pptpd
+	setup_firewall
+	return 0
+}
+
+start_service() {
+	config_load pptpd
+	setup_config pptpd || return
+	config_foreach setup_login login
+
+	ln -sfn $CHAP_SECRETS /etc/ppp/chap-secrets
+
+	procd_open_instance
+	procd_set_param command $BIN -c $CONFIG
+	procd_close_instance
+}
