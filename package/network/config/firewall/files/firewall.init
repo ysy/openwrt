@@ -37,20 +37,31 @@ service_triggers() {
 	procd_close_validate
 }
 
+restart_other()
+{
+	ubus send tmon.cmd '{"cmd" : "stop"}' 
+	ubus send tmon.cmd '{"cmd" : "start"}'
+	/usr/bin/tbw
+	/usr/bin/tfilter
+}
 restart() {
 	fw3 restart
+	restart_other
 }
 
 start_service() {
 	fw3 ${QUIET} start
+	restart_other
 }
 
 stop_service() {
 	fw3 flush
+	restart_other
 }
 
 reload_service() {
 	fw3 reload
+	restart_other
 }
 
 boot() {

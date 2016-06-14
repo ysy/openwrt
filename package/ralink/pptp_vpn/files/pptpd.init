@@ -105,15 +105,16 @@ setup_config() {
 	[ -n "$remoteip" ] && echo "remoteip  $remoteip" >> $CONFIG
 	[ "$idle" -gt 0 ] && echo "idle $idle" >> $CONFIG
 	echo "require-pap" >> $CONFIG
-	[ "$pap" -eq 0 ] &&  enc_str="$enc_str\nrefuse_pap"
-	[ "$eap" -eq 0 ] &&  enc_str="$enc_str\nrefuse_eap"
+	[ "$pap" -eq 0 ] &&  enc_str="$enc_str\nrefuse-pap"
+	[ "$eap" -eq 0 ] &&  enc_str="$enc_str\nrefuse-eap"
 	[ "$ms_chap" -eq 0 ] && enc_str="$enc_str\nrefuse-mschap"
 	[ "$ms_chapv2" -eq 0 ] && enc_str="$enc_str\nrefuse-mschap-v2"
 	[ "$debug" -eq 1 ] && debug_str="debug"	
-	[ "$encrypt" -eq 1 ] && enc_str="$enc_str\nmppe required,no40,no56,stateless"	
+	[ "$encrypt" -eq 1 ] && enc_str="$enc_str\nrequire-mschap-v2\nmppe required,no40,no56,stateless"
 	enc_str=`echo -e $enc_str`	
 	cat <<EOF > $OPTIONS
 $debug_str
+logfile /tmp/pptp.log
 auth
 name "pptp-server"
 lcp-echo-failure $lcp_fail_count
