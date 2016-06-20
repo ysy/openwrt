@@ -73,4 +73,16 @@
 	pcie@1e140000 {
 		status = "okay";
 	};
+
+	gpio-keys-polled {
+                compatible = "gpio-keys-polled";
+                #address-cells = <1>;
+                #size-cells = <0>;
+                poll-interval = <20>;
+                S2 {
+                        label = "S2";
+                        gpios = <&gpio0 18 1>;
+                        linux,code = <0x100>;
+                };
+	};
 };
