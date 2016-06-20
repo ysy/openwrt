@@ -121,6 +121,7 @@ platform_check_image() {
 	x5 |\
 	x8 |\
 	xiaomi-miwifi-mini |\
+	generic |\
 	y1 |\
 	y1s |\
 	zte-q7 |\
