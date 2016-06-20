@@ -41,6 +41,7 @@ endef
 define Package/tmon/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/tmon $(1)/usr/bin/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/pptp_mon $(1)/usr/bin/
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/tmon.init $(1)/etc/init.d/tmon
 endef
