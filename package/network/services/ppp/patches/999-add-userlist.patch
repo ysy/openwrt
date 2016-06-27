@@ -1,0 +1,33 @@
+--- a/pppd/ipcp.c
++++ b/pppd/ipcp.c
+@@ -1778,8 +1778,9 @@ ip_demand_conf(u)
+ 
+     notice("local  IP address %I", wo->ouraddr);
+     if (wo->hisaddr)
+-	notice("remote IP address %I", wo->hisaddr);
+-
++    {
++        notice("remote IP address %I 111", wo->hisaddr);
++    }
+     return 1;
+ }
+ 
+@@ -1948,7 +1949,18 @@ ipcp_up(f)
+ 
+ 	notice("local  IP address %I", go->ouraddr);
+ 	if (ho->hisaddr != 0)
++        {
++	    struct in_addr addr;
++            addr.s_addr = ho->hisaddr;
++            char path[100];
++	    sprintf(path, "/tmp/%s.user", inet_ntoa(addr));
++            notice("filename %s", path);
++            FILE * fp = fopen(path, "w");
++            fprintf(fp, "%s", peer_authname);
++            fclose(fp);
++
+ 	    notice("remote IP address %I", ho->hisaddr);
++        }
+ 	if (go->dnsaddr[0])
+ 	    notice("primary   DNS address %I", go->dnsaddr[0]);
+ 	if (go->dnsaddr[1])
