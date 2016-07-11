@@ -51,6 +51,7 @@ setup_login() {
 setup_firewall() {
 	uci del firewall.pptpvpn_zone
 	uci del firewall.pptpvpn_wan_forward
+	uci del firewall.pptpvpn_lan_forward
 	uci del firewall.pptpvpn_disable_lan_rule
 	uci commit
 	local forward="REJECT"
@@ -75,6 +76,13 @@ config forwarding pptpvpn_wan_forward
 EOF
 
 	fi	
+
+   cat <<EOF >>/etc/config/firewall
+config forwarding pptpvpn_lan_forward
+        option src              pptpvpn
+        option dest             lan
+
+EOF
 
 	if [ "$disable_lan" -eq 1 ]; then
 	cat <<EOF >> /etc/config/firewall
