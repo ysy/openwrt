@@ -371,7 +371,7 @@ static void redirect_init(void)
 
     log_message(LOG_INFO, "redirect_init");
 
-     fp = fopen("/etc/redirect.conf", "r");
+    fp = fopen("/tmp/tinyproxy_url_redirect.conf", "r");
     if (!fp) {
         fp =  fopen("./redirect.conf", "r");
     }

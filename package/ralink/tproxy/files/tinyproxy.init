@@ -52,6 +52,15 @@ stop() {
 	service_stop /usr/sbin/tinyproxy
 }
 
+write_url_redirect() {
+	echo "write_url_redirect"
+	config_get_bool enabled "$1" enabled 0                       
+        config_get old "$1" old       
+        config_get new "$1" new
+	
+	[ $enabled -gt 0 ] && echo "$old $new" >> /tmp/tinyproxy_url_redirect.conf
+	
+}
 start_proxy() {
 	if !( section_enabled "$1" ) ; then
 		if (uci get firewall.tinyproxy_redirect  ); then
@@ -113,7 +122,8 @@ start_proxy() {
 	proxy_list "$1" ConnectPort >> $CFGFILE
 
 	config_foreach write_upstream upstream
-
+	echo -n "" > /tmp/tinyproxy_url_redirect.conf
+	config_foreach write_url_redirect url_redirect
 	service_start /usr/sbin/tinyproxy -c "$CFGFILE"
 }
 
