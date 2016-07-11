@@ -58,13 +58,13 @@
  * Macro to help test if the Upstream proxy supported is compiled in and
  * enabled.
  */
-#ifdef UPSTREAM_SUPPORT
+/*#ifdef UPSTREAM_SUPPORT
 #  define UPSTREAM_CONFIGURED() (config.upstream_list != NULL)
 #  define UPSTREAM_HOST(host) upstream_get(host, config.upstream_list)
-#else
+#else*/
 #  define UPSTREAM_CONFIGURED() (0)
 #  define UPSTREAM_HOST(host) (NULL)
-#endif
+/*#endif*/
 
 /*
  * Codify the test for the carriage return and new line characters.
@@ -1145,13 +1145,14 @@ static void relay_connection (struct conn_s *connptr)
         struct timeval tv;
         time_t last_access;
         int ret;
+        int written = 0;
         double tdiff;
         int maxfd = max (connptr->client_fd, connptr->server_fd) + 1;
         ssize_t bytes_received;
-
-        socket_nonblocking (connptr->client_fd);
+        unsigned char buf[4096];
+       /* socket_nonblocking (connptr->client_fd);
         socket_nonblocking (connptr->server_fd);
-
+	*/
         last_access = time (NULL);
 
         for (;;) {
@@ -1162,14 +1163,14 @@ static void relay_connection (struct conn_s *connptr)
                     config.idletimeout - difftime (time (NULL), last_access);
                 tv.tv_usec = 0;
 
-                if (buffer_size (connptr->sbuffer) > 0)
-                        FD_SET (connptr->client_fd, &wset);
+          /*      if (buffer_size (connptr->sbuffer) > 0)*
+                FD_SET (connptr->client_fd, &wset);
                 if (buffer_size (connptr->cbuffer) > 0)
-                        FD_SET (connptr->server_fd, &wset);
-                if (buffer_size (connptr->sbuffer) < MAXBUFFSIZE)
-                        FD_SET (connptr->server_fd, &rset);
-                if (buffer_size (connptr->cbuffer) < MAXBUFFSIZE)
-                        FD_SET (connptr->client_fd, &rset);
+                FD_SET (connptr->server_fd, &wset);*/
+                /*if (buffer_size (connptr->sbuffer) < MAXBUFFSIZE)*/
+                FD_SET (connptr->server_fd, &rset);
+            /*    if (buffer_size (connptr->cbuffer) < MAXBUFFSIZE)*/
+                FD_SET (connptr->client_fd, &rset);
 
                 ret = select (maxfd, &rset, &wset, NULL, &tv);
 
@@ -1199,48 +1200,29 @@ static void relay_connection (struct conn_s *connptr)
 
                 if (FD_ISSET (connptr->server_fd, &rset)) {
                         bytes_received =
-                            read_buffer (connptr->server_fd, connptr->sbuffer);
+                            read (connptr->server_fd, buf, 4096);
                         if (bytes_received < 0)
                                 break;
-
-                        connptr->content_length.server -= bytes_received;
-                        if (connptr->content_length.server == 0)
+                          written = 0;
+                          while(written < bytes_received) {
+                              written += write(connptr->client_fd, buf+written, bytes_received - written);
+                          }
+                }
+                
+                if (FD_ISSET (connptr->client_fd, &rset) ) {
+                      bytes_received =
+                            read (connptr->client_fd, buf, 4096);
+                        if (bytes_received < 0)
                                 break;
-                }
-                if (FD_ISSET (connptr->client_fd, &rset)
-                    && read_buffer (connptr->client_fd, connptr->cbuffer) < 0) {
-                        break;
-                }
-                if (FD_ISSET (connptr->server_fd, &wset)
-                    && write_buffer (connptr->server_fd, connptr->cbuffer) < 0) {
-                        break;
-                }
-                if (FD_ISSET (connptr->client_fd, &wset)
-                    && write_buffer (connptr->client_fd, connptr->sbuffer) < 0) {
-                        break;
+                          written = 0;
+                          while (written < bytes_received) {
+                           written += write(connptr->server_fd, buf+written, bytes_received - written);
+                        }
                 }
         }
 
-        /*
-         * Here the server has closed the connection... write the
-         * remainder to the client and then exit.
-         */
-        socket_blocking (connptr->client_fd);
-        while (buffer_size (connptr->sbuffer) > 0) {
-                if (write_buffer (connptr->client_fd, connptr->sbuffer) < 0)
-                        break;
-        }
+
         shutdown (connptr->client_fd, SHUT_WR);
-
-        /*
-         * Try to send any remaining data to the server if we can.
-         */
-        socket_blocking (connptr->server_fd);
-        while (buffer_size (connptr->cbuffer) > 0) {
-                if (write_buffer (connptr->server_fd, connptr->cbuffer) < 0)
-                        break;
-        }
-
         return;
 }
 

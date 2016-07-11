@@ -278,6 +278,7 @@ int getpeer_information (int fd, char *ipaddr, char *string_addr)
                 return -1;
 
         /* Get the full host name */
-        return getnameinfo ((struct sockaddr *) &sa, salen,
-                            string_addr, HOSTNAME_LENGTH, NULL, 0, 0);
+        /*return getnameinfo ((struct sockaddr *) &sa, salen,
+                            string_addr, HOSTNAME_LENGTH, NULL, 0, 0);*/
+	return 0;
 }
