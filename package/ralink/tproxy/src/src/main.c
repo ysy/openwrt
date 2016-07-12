@@ -467,8 +467,8 @@ main (int argc, char **argv)
 
         redirect_init();
         /* Start listening on the selected port. */
-        if (child_listening_sock (config.port) < 0) {
-                fprintf (stderr, "%s: Could not create listening socket.\n",
+        if (child_listening_sockets(config.listen_addrs, config.port) < 0) {
+                fprintf (stderr, "%s: Could not create listening sockets.\n",
                          argv[0]);
                 exit (EX_OSERR);
         }

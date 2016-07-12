@@ -25,8 +25,6 @@
  * don't try to free the data, or realloc the memory. :)
  */
 
-#include <stdlib.h>
-
 #include "main.h"
 
 #include "hashmap.h"
@@ -66,6 +64,9 @@ struct hashmap_s {
  * The contents of the key are converted to lowercase, so this function
  * is not case-sensitive.
  *
+ * This is Dan Bernstein's hash function as described, for example, here:
+ * http://www.cse.yorku.ca/~oz/hash.html
+ *
  * If any of the arguments are invalid a negative number is returned.
  */
 static int hashfunc (const char *key, unsigned int size, uint32_t seed)
@@ -78,11 +79,7 @@ static int hashfunc (const char *key, unsigned int size, uint32_t seed)
                 return -ERANGE;
 
         for (hash = seed; *key != '\0'; key++) {
-                uint32_t bit = (hash & 1) ? (1 << (sizeof (uint32_t) - 1)) : 0;
-
-                hash >>= 1;
-
-                hash += tolower (*key) + bit;
+                hash = ((hash << 5) + hash) ^ tolower (*key);
         }
 
         /* Keep the hash within the table limits */
@@ -107,7 +104,7 @@ hashmap_t hashmap_create (unsigned int nbuckets)
         if (!ptr)
                 return NULL;
 
-	ptr->seed = (uint32_t)rand();
+        ptr->seed = (uint32_t)rand();
         ptr->size = nbuckets;
         ptr->buckets = (struct hashbucket_s *) safecalloc (nbuckets,
                                                            sizeof (struct
