@@ -58,13 +58,13 @@
  * Macro to help test if the Upstream proxy supported is compiled in and
  * enabled.
  */
-#ifdef UPSTREAM_SUPPORT
+/*#ifdef UPSTREAM_SUPPORT
 #  define UPSTREAM_CONFIGURED() (config.upstream_list != NULL)
 #  define UPSTREAM_HOST(host) upstream_get(host, config.upstream_list)
-#else
+#else*/
 #  define UPSTREAM_CONFIGURED() (0)
 #  define UPSTREAM_HOST(host) (NULL)
-#endif
+/*#endif*/
 
 /*
  * Codify the test for the carriage return and new line characters.
