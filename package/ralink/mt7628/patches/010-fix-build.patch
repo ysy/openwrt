@@ -1,0 +1,89 @@
+--- a/build/Makefile
++++ b/build/Makefile
+@@ -1,11 +1,16 @@
+ EXTRA_CFLAGS = -Idrivers/net/wireless/mt_wifi/include \
+ 				-Idrivers/net/wireless/mt_wifi/embedded/include \
+ 				-Idrivers/net/wireless/mt_wifi/ate/include
+-
++CONFIG_SUPPORT_OPENWRT=y
++CONFIG_SOC_MT7628=y
+ ifeq ($(CONFIG_SUPPORT_OPENWRT),y)
+ EXTRA_CFLAGS = -I$(src)/../src/include \
+ 				-I$(src)/../src/embedded/include \
+ 				-I$(src)/../src/ate/include
++EXTRA_CFLAGS += -DCONFIG_SUPPORT_OPENWRT
++EXTRA_CFLAGS += -DSUPPORT_OPENWRT
++EXTRA_CFLAGS += -DCONFIG_SOC_MT7628
++EXTRA_CFLAGS += -DSOC_MT7628
+ DRV_NAME = mt7628
+ SRC_DIR = ../src/embedded
+ obj-m += $(DRV_NAME).o
+@@ -163,7 +168,7 @@ endif
+ #  spec_objs += $(SRC_DIR)/common/wapi.o\
+ #                $(SRC_DIR)/common/wapi_sms4.o\
+ #		$(SRC_DIR)/common/wapi_crypt.o
+-#		
++#
+ #endif
+ 
+ # ACM
+@@ -286,7 +291,7 @@ ap_objs := $(SRC_DIR)/ap/ap.o\
+             $(SRC_DIR)/ap/ap_qload.o\
+             $(SRC_DIR)/ap/ap_cfg.o\
+             $(SRC_DIR)/ap/ap_nps.o\
+-            $(SRC_DIR)/os/linux/ap_ioctl.o            
++            $(SRC_DIR)/os/linux/ap_ioctl.o
+ 
+ ifeq ($(CONFIG_QOS_DLS_SUPPORT),y)
+     EXTRA_CFLAGS += -DQOS_DLS_SUPPORT
+@@ -429,7 +434,7 @@ endif
+ ########################################################
+ # chip related files
+ ########################################################
+-ifeq ($(CONFIG_RALINK_MT7628),y)
++ifeq ($(CONFIG_SOC_MT7628),y)
+ EXTRA_CFLAGS += -DMT7628 -DMT_BBP -DMT_RF -DRTMP_RBUS_SUPPORT -DRTMP_RF_RW_SUPPORT -DMT_MAC -DRTMP_MAC_PCI -DRTMP_PCI_SUPPORT
+ EXTRA_CFLAGS += -DRTMP_FLASH_SUPPORT -DDMA_SCH_SUPPORT -DRTMP_EFUSE_SUPPORT
+ EXTRA_CFLAGS += -DCONFIG_ANDES_SUPPORT
+@@ -460,7 +465,7 @@ endif
+ 
+ 
+ #
+-# Root 
++# Root
+ #
+ 
+ $(DRV_NAME)-objs += $(ap_objs) $(cmm_objs) $(asic_objs) $(chip_objs) $(rate_objs)\
+@@ -497,10 +502,10 @@ EXTRA_CFLAGS += -DDOT11_N_SUPPORT -DDOT1
+ EXTRA_CFLAGS += -DCONFIG_RA_NAT_NONE
+ 
+ #provide busy time statistics for every TBTT */
+-#EXTRA_CFLAGS += -DQLOAD_FUNC_BUSY_TIME_STATS 
++#EXTRA_CFLAGS += -DQLOAD_FUNC_BUSY_TIME_STATS
+ 
+-# provide busy time alarm mechanism 
+-# use the function to avoid to locate in some noise environments 
++# provide busy time alarm mechanism
++# use the function to avoid to locate in some noise environments
+ #EXTRA_CFLAGS += -DQLOAD_FUNC_BUSY_TIME_ALARM
+ 
+ ifeq ($(CONFIG_RT2860V2_AUTO_CH_SELECT_ENCANCE),y)
+--- a/src/embedded/include/rtmp_def.h
++++ b/src/embedded/include/rtmp_def.h
+@@ -496,14 +496,14 @@ enum WIFI_MODE{
+ #ifdef APCLI_SUPPORT
+ #undef MAX_APCLI_NUM
+ #define MAX_APCLI_NUM				1
+-#ifdef MULTI_APCLI_SUPPORT 
++#ifdef MULTI_APCLI_SUPPORT
+ #undef	MAX_APCLI_NUM
+ #define MAX_APCLI_NUM				2
+ #endif /* MULTI_APCLI_SUPPORT */
+ #endif /* APCLI_SUPPORT */
+ #ifdef APCLI_CONNECTION_TRIAL
+ #ifndef MULTI_APCLI_SUPPORT
+-#error "APCLI_CONNECTION_TRIAL flag depends on MULTI_APCLI_SUPPORT" 
++#error "APCLI_CONNECTION_TRIAL flag depends on MULTI_APCLI_SUPPORT"
+ #endif
+ #endif
+ 
