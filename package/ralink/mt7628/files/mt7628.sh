@@ -11,20 +11,10 @@ scan_mt7628() {
 	scan_ralink_wifi mt7628 mt7628
 }
 
-
-disable_mt7628() {
-	disable_ralink_wifi mt7628
-}
-
-enable_mt7628() {
-	enable_ralink_wifi mt7628 mt7628
-}
-
 detect_mt7628() {
 #	detect_ralink_wifi mt7628 mt7628
 	ssid=mt7628-`ifconfig eth0 | grep HWaddr | cut -c 51- | sed 's/://g'`
-	cd /sys/module/
-	[ -d $module ] || return
+	ln -s /etc/wireless/mt7628/mt7628.dat /etc/Wireless/RT2860/RT2860.dat 
 	[ -e /etc/config/wireless ] && return
          cat <<EOF
 config wifi-device      mt7628
