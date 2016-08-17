@@ -1,0 +1,43 @@
+#!/bin/sh
+
+restore() {
+	echo "Restoring mac address"
+	if [ -f /etc/origin_mac ]; then
+		mac=`cat /etc/origin_mac`
+		clone $mac
+	else
+		echo "no origin mac"
+	fi
+}
+
+clone() {
+	echo "Cloning mac address"
+	if [ -z $1 ]; then
+		echo "invalid argument"
+		exit 1
+	fi
+	
+	if ! [ -f  /etc/origin_mac ]; then
+		cat /sys/class/net/eth0.2/address > /etc/origin_mac
+		sync
+	fi
+	ifdown wan	
+	uci set network.wan.macaddr=$1
+	uci commit
+	#/etc/init.d/network reload
+	ifup wan
+}
+
+if [ -z $1 ]; then
+	echo "invalid argument"
+	exit 1 
+fi
+
+
+if [ "$1" == "restore" ]; then
+	restore
+fi
+
+if [ "$1" == "clone" ]; then
+	clone $2
+fi

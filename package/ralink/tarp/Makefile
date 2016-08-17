@@ -38,7 +38,11 @@ endef
 
 define Package/tarp/install
 	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_DIR) $(1)/usr/bin/
 	$(INSTALL_BIN) ./files/arp.init $(1)/etc/init.d/arp
+	$(INSTALL_BIN) ./files/cpuload.init $(1)/etc/init.d/cpuload
+	$(INSTALL_BIN) ./files/clonemac $(1)/usr/bin/clonemac
+	$(INSTALL_BIN) ./files/cpuload $(1)/usr/bin/cpuload
 	$(INSTALL_DIR) $(1)/etc/config
 	$(INSTALL_DATA) ./files/arp.config $(1)/etc/config/arp
 endef

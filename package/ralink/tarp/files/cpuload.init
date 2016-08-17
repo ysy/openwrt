@@ -1,0 +1,14 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2007 OpenWrt.org
+
+#start after dbus (60)
+START=99
+USE_PROCD=1
+PROG=/usr/bin/cpuload
+
+start_service() {
+	procd_open_instance
+	procd_set_param command "$PROG"
+	procd_set_param respawn 
+	procd_close_instance
+}
