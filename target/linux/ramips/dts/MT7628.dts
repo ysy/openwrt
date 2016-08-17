@@ -6,15 +6,47 @@
 	compatible = "mediatek,mt7628an-eval-board", "mediatek,mt7628an-soc";
 	model = "Mediatek MT7628AN evaluation board";
 
+	chosen {
+		bootargs = "console=ttyS0,57600";
+	};
+
 	memory@0 {
 		device_type = "memory";
-		reg = <0x0 0x2000000>;
+		reg = <0x0 0x4000000>;
 	};
 
 	pinctrl {
 		state_default: pinctrl0 {
 			gpio {
-				ralink,group = "i2c", "jtag";
+				ralink,group = "gpio";
+				ralink,function = "gpio";
+			};
+			perst {
+				ralink,group = "perst";
+				ralink,function = "gpio";
+			};
+			refclk {
+				ralink,group = "refclk";
+				ralink,function = "gpio";
+			};
+			i2s {
+				ralink,group = "i2s";
+				ralink,function = "gpio";
+			};
+			spis {
+				ralink,group = "spis";
+				ralink,function = "gpio";
+			};
+			wled_kn {
+				ralink,group = "wled_kn";
+				ralink,function = "gpio";
+			};
+			wled_an {
+				ralink,group = "wled_an";
+				ralink,function = "wled_an";
+			};
+			wdt {
+				ralink,group = "wdt";
 				ralink,function = "gpio";
 			};
 		};
@@ -24,14 +56,17 @@
 		spi@b00 {
 			status = "okay";
 
+			pinctrl-names = "default";
+			pinctrl-0 = <&spi_pins>, <&spi_cs1_pins>;
+
 			m25p80@0 {
 				#address-cells = <1>;
 				#size-cells = <1>;
-				compatible = "en25q64";
+				compatible = "mx25l25635e";
 				reg = <0 0>;
-				linux,modalias = "m25p80", "en25q64";
-				spi-max-frequency = <10000000>;
-				m25p,chunked-io = <32>;
+				linux,modalias = "m25p80", "mx25l25635e";
+				spi-max-frequency = <40000000>;
+				m25p,chunked-io = <31>;
 
 				partition@0 {
 					label = "u-boot";
@@ -42,7 +77,6 @@
 				partition@30000 {
 					label = "u-boot-env";
 					reg = <0x30000 0x10000>;
-					read-only;
 				};
 
 				factory: partition@40000 {
@@ -56,6 +90,81 @@
 					reg = <0x50000 0x7b0000>;
 				};
 			};
+
+			spidev@1 {
+				#address-cells = <1>;
+				#size-cells = <1>;
+				compatible = "spidev";
+				reg = <1 0>;
+				spi-max-frequency = <40000000>;
+			};
 		};
+
+		i2c@900 {
+			status = "okay";
+		};
+
+		uart1@d00 {
+			status = "okay";
+		};
+
+		uart2@e00 {
+			status = "okay";
+		};
+
+		pwm@5000 {
+			status = "okay";
+		};
+	};
+
+	ethernet@10100000 {
+		mtd-mac-address = <&factory 0x28>;
+		ralink,port-map = "wllll";
+	};
+
+	sdhci@10130000 {
+		status = "okay";
+		mediatek,cd-high;
+//		mediatek,cd-poll;
+	};
+
+	bootstrap {
+		compatible = "mediatek,linkit";
+
+		status = "okay";
+	};
+
+	gpio-leds {
+		compatible = "gpio-leds";
+		wifi {
+			label = "mediatek:orange:wifi";
+			gpios = <&wgpio 0 0>;
+			default-state = "on";
+		};
+	};
+
+	gpio-keys-polled {
+		compatible = "gpio-keys-polled";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		poll-interval = <20>;
+		wps {
+			label = "reset";
+			gpios = <&gpio1 6 1>;
+			linux,code = <0x211>;
+		};
+	};
+
+	wgpio: gpio-wifi {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		compatible = "mediatek,gpio-wifi";
+		gpio-controller;
+		#gpio-cells = <2>;
+	};
+
+	pcie@10140000 { 
+		status = "okay";
 	};
 };
