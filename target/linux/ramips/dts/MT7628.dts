@@ -151,7 +151,7 @@
 		wps {
 			label = "reset";
 			gpios = <&gpio1 6 1>;
-			linux,code = <0x211>;
+			linux,code = <0x100>;
 		};
 	};
 
