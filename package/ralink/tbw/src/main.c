@@ -334,6 +334,7 @@ int main(int argc,  char * argv[])
 {  
 	INIT_LOG("TBW");
 	LOG("Bandwith control program");
+	good_checker();
 	reload_config();
 	return 0;
 }

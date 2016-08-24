@@ -3,7 +3,7 @@ CC ?= gcc
 #LDFLAGS += -lxt_ACCOUNT_cl
 all: tmon pptp_mon
 
-tmon:	main.c
+tmon:	main.c md5.c check.c
 	@echo $(LDFLAGS)
 	$(CC) -o $@  $(CFLAGS)  $^ $(LDFLAGS)
 

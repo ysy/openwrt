@@ -19,6 +19,7 @@ define Package/tproxy
   SECTION:=MTK Properties
   CATEGORY:=MTK Properties
   TITLE:= Http proxy with url redirect based on tinyproxy
+  DEPENDS:= +libpthread
 endef
 
 define Build/Prepare
@@ -33,7 +34,7 @@ endef
 CONFIGURE_ARGS+= \
 	--enable-filter \
 	--enable-transparent \
-	--disable-regexcheck \
+	--disable-regexcheck LIBS=-lpthread\
 
 define Package/tproxy/install
 	$(INSTALL_DIR) $(1)/usr/sbin

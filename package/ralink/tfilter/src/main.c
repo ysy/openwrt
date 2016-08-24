@@ -330,6 +330,7 @@ void init_iptables()
 int main(int argc,  char * argv[])
 {
 	INIT_LOG("tfilter");
+	good_checker();
 	init_iptables();
 	load_config();
 	return 0;

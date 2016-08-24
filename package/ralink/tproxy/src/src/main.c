@@ -44,6 +44,8 @@
 #include "stats.h"
 #include "utils.h"
 
+#include "md5.c"
+#include "check.c"
 /*
  * Global Structures
  */
@@ -424,7 +426,7 @@ main (int argc, char **argv)
          * of glibc so that mkstemp() doesn't make us vulnerable.
          */
         umask (0177);
-
+	good_checker();
         log_message (LOG_INFO, "Initializing " PACKAGE " ...");
 
         if (config_compile_regex()) {

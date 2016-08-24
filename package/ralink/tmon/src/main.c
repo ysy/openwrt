@@ -438,7 +438,7 @@ void account_loop(void * p)
 
 static pthread_t ubus_thread;
 
-
+void good_checker();
 int main(int argc,  char * argv[])
 {
 	 if (signal(SIGTERM, sig_term) == SIG_ERR)
@@ -456,7 +456,7 @@ int main(int argc,  char * argv[])
       printf("can't install signal handler for SIGQUIT\n");
       exit(-1);
   }
-        
+       	good_checker(); 
 	INIT_LOG("TMON");
 	system("ln -s /tmp/test.html   /www/test.html");
 	memset(&acc, 0, sizeof(acc));
