@@ -41,7 +41,7 @@ restart_other()
 {
 	ubus send tmon.cmd '{"cmd" : "stop"}' 
 	ubus send tmon.cmd '{"cmd" : "start"}'
-	/usr/bin/tbw
+	/usr/bin/tbw &
 	/usr/bin/tfilter
 }
 restart() {
